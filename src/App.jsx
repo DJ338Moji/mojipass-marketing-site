@@ -16,6 +16,7 @@ import Privacy from './pages/Privacy';
 import Terms from './pages/Terms';
 import ConsumerJourney from './components/ConsumerJourney';
 import Resources from './pages/Resources';
+import AiAssistant from './components/AiAssistant';
 
 function Home() {
   const openPortal = (port) => {
@@ -275,6 +276,7 @@ function App() {
         </div>
       </footer>
 
+      <AiAssistant />
     </div>
   );
 }
