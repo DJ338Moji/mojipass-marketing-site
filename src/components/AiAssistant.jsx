@@ -25,7 +25,12 @@ const AiAssistant = () => {
     setIsLoading(true);
 
     try {
-      const response = await fetch('https://api.mojipass.com/api/v1/ai/ask', {
+      const isDev = window.location.hostname === 'localhost';
+      const apiUrl = isDev 
+        ? 'http://localhost:4000/api/v1/ai/ask' 
+        : 'https://api.mojipass.com/api/v1/ai/ask';
+
+      const response = await fetch(apiUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ question: userMessage })
