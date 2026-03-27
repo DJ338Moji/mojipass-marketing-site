@@ -4,7 +4,7 @@ import { SparklesIcon, XMarkIcon, PaperAirplaneIcon, ChatBubbleLeftRightIcon } f
 const AiAssistant = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([
-    { role: 'assistant', content: "Hi! I'm the Mojipass AI. Ask me anything about our ecosystem—for Brands, Merchants, or Partners!" }
+    { role: 'assistant', content: "Hi! I'm Mojipass AI. Ask me anything about our ecosystem—for Brands, Merchants, Partners and Consumers!" }
   ]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -28,7 +28,7 @@ const AiAssistant = () => {
       const isDev = window.location.hostname === 'localhost';
       const apiUrl = isDev 
         ? 'http://localhost:4000/api/v1/ai/ask' 
-        : 'https://api.mojipass.com/api/v1/ai/ask';
+        : 'https://mojipass-core-api-production.up.railway.app/api/v1/ai/ask';
 
       const response = await fetch(apiUrl, {
         method: 'POST',

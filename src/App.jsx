@@ -19,17 +19,15 @@ import Resources from './pages/Resources';
 import AiAssistant from './components/AiAssistant';
 
 function Home() {
-  const openPortal = (port) => {
-    // Determine the subdomain based on the dev port
-    const subdomain = port === 5174 ? 'brands' : 'partner';
-    
-    // In local dev, use localhost. In production, use the official subdomain.
+  const openPortal = (subdomain) => {
     const isDev = window.location.hostname === 'localhost';
-    const targetUrl = isDev 
+    let port = 5173; 
+    if (subdomain === 'brands') port = 5174;
+    if (subdomain === 'partners') port = 5175;
+
+    window.location.href = isDev 
       ? `http://localhost:${port}` 
       : `https://${subdomain}.mojipass.com`;
-
-    window.location.href = targetUrl;
   };
 
   return (
@@ -45,12 +43,16 @@ function Home() {
             <span>The Shopify Integration is Now Live</span>
           </div>
 
-          <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-br from-white via-slate-200 to-slate-500 leading-tight">
-            The Zero-Friction Sponsored <br className="hidden md:block" /> Checkout Network.
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter leading-[1.0] mb-8 drop-shadow-2xl">
+            <span className="block text-white mb-2">THE WORLD'S FIRST</span>
+            <span className="block bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 via-azure-400 to-blue-500 pb-2">
+              FRICTIONLESS
+            </span>
+            <span className="block text-white">CHECKOUT NETWORK.</span>
           </h1>
-
-          <p className="text-xl md:text-2xl text-slate-400 max-w-3xl mx-auto leading-relaxed">
-            Turn every checkout into a campaign. Connect premium brands, independent Shopify merchants, and high-reach creators into a single, high-converting retail footprint.
+          
+          <p className="text-xl md:text-2xl text-slate-300 max-w-2xl mx-auto mb-12 leading-relaxed font-medium">
+            We bridge the gap between Brands, Merchants, and Creators to reward the Shopper—the world's first purely performance-based retail network. <span className="text-emerald-400">We only win when you win.</span>
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
@@ -60,6 +62,11 @@ function Home() {
             >
               Choose Your Portal <ArrowRightIcon className="w-5 h-5" />
             </button>
+          </div>
+
+          <div className="pt-8 flex items-center justify-center gap-3 text-slate-400 text-xs font-black uppercase tracking-[0.2em]">
+            <div className="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_10px_#10b981] animate-pulse"></div>
+            Purely Performance Periodic Model • Zero Subscription Fees
           </div>
         </div>
       </section>
@@ -71,7 +78,7 @@ function Home() {
             <ShieldCheckIcon className="w-6 h-6 text-slate-500" />
             Guaranteed Closed-Loop Attribution
           </div>
-          <div className="flexItems-center gap-3">
+          <div className="flex items-center gap-3">
             <span className="text-emerald-400 font-bold">100%</span> Seamless Shopify Integration
           </div>
           <div className="flex items-center gap-3">
@@ -97,7 +104,7 @@ function Home() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
 
             {/* Card 1: Brands */}
-            <div className="group relative bg-[var(--card-bg)] border border-[var(--card-border)] p-8 rounded-3xl hover:border-[var(--color-brand)]/30 transition-all cursor-pointer overflow-hidden backdrop-blur-sm">
+            <div id="brands" className="group relative bg-[var(--card-bg)] border border-[var(--card-border)] p-8 rounded-3xl hover:border-[var(--color-brand)]/30 transition-all cursor-pointer overflow-hidden backdrop-blur-sm">
               <div className="absolute top-0 right-0 w-64 h-64 bg-[var(--color-brand)]/5 blur-[var(--glow-blur)] rounded-full group-hover:bg-[var(--color-brand)]/10 transition-all"></div>
 
               <div className="w-14 h-14 bg-blue-500/10 rounded-2xl flex items-center justify-center mb-6 border border-blue-500/20">
@@ -114,7 +121,7 @@ function Home() {
               </ul>
 
               <button
-                onClick={() => openPortal(5174)}
+                onClick={() => openPortal('brands')}
                 className="w-full py-4 rounded-xl bg-blue-500/10 text-blue-400 font-bold hover:bg-blue-500/20 border border-blue-500/20 transition-all flex justify-center items-center gap-2 group-hover:shadow-[0_0_20px_-5px_rgba(59,130,246,0.3)]"
               >
                 Access Brand Portal <ArrowRightIcon className="w-4 h-4" />
@@ -122,7 +129,7 @@ function Home() {
             </div>
 
             {/* Card 2: Merchants */}
-            <div className="group relative bg-[var(--card-bg)] border border-[var(--card-border)] p-8 rounded-3xl hover:border-[var(--color-brand)]/30 transition-all cursor-pointer overflow-hidden transform md:-translate-y-4 shadow-2xl backdrop-blur-sm">
+            <div id="merchants" className="group relative bg-[var(--card-bg)] border border-[var(--card-border)] p-8 rounded-3xl hover:border-[var(--color-brand)]/30 transition-all cursor-pointer overflow-hidden transform md:-translate-y-4 shadow-2xl backdrop-blur-sm">
               <div className="absolute top-0 right-0 w-64 h-64 bg-[var(--color-brand)]/5 blur-[var(--glow-blur)] rounded-full group-hover:bg-[var(--color-brand)]/10 transition-all"></div>
 
               <div className="w-14 h-14 bg-[var(--color-brand)]/10 rounded-2xl flex items-center justify-center mb-6 border border-[var(--color-brand)]/20">
@@ -139,7 +146,7 @@ function Home() {
               </ul>
 
               <button
-                onClick={() => alert('This would deep link to the Shopify App Store Listing!')}
+                onClick={() => openPortal('app')}
                 className="w-full py-4 rounded-xl bg-[var(--color-brand)] text-white font-bold hover:brightness-110 transition-all flex justify-center items-center gap-2 shadow-[0_0_20px_-5px_var(--color-brand)]"
               >
                 Install Shopify App <ArrowRightIcon className="w-4 h-4" />
@@ -147,7 +154,7 @@ function Home() {
             </div>
 
             {/* Card 3: Partners */}
-            <div className="group relative bg-[var(--card-bg)] border border-[var(--card-border)] p-8 rounded-3xl hover:border-[var(--color-brand)]/30 transition-all cursor-pointer overflow-hidden backdrop-blur-sm">
+            <div id="partners" className="group relative bg-[var(--card-bg)] border border-[var(--card-border)] p-8 rounded-3xl hover:border-[var(--color-brand)]/30 transition-all cursor-pointer overflow-hidden backdrop-blur-sm">
               <div className="absolute top-0 right-0 w-64 h-64 bg-[var(--color-brand)]/5 blur-[var(--glow-blur)] rounded-full group-hover:bg-[var(--color-brand)]/10 transition-all"></div>
 
               <div className="w-14 h-14 bg-purple-500/10 rounded-2xl flex items-center justify-center mb-6 border border-purple-500/20">
@@ -164,7 +171,7 @@ function Home() {
               </ul>
 
               <button
-                onClick={() => openPortal(5175)}
+                onClick={() => openPortal('partners')}
                 className="w-full py-4 rounded-xl bg-purple-500/10 text-purple-400 font-bold hover:bg-purple-500/20 border border-purple-500/20 transition-all flex justify-center items-center gap-2 group-hover:shadow-[0_0_20px_-5px_rgba(168,85,247,0.3)]"
               >
                 Access Partner Hub <ArrowRightIcon className="w-4 h-4" />
@@ -172,7 +179,10 @@ function Home() {
             </div>
 
             {/* Card 4: Consumers/Shoppers */}
-            <div className="group relative bg-gradient-to-br from-[#1E293B] to-emerald-900/20 border border-emerald-500/20 p-8 rounded-3xl hover:border-emerald-500/40 transition-all cursor-pointer overflow-hidden backdrop-blur-sm md:col-span-3">
+            <div 
+              onClick={() => document.getElementById('consumer').scrollIntoView({ behavior: 'smooth' })}
+              className="group relative bg-gradient-to-br from-[#1E293B] to-emerald-900/20 border border-emerald-500/20 p-8 rounded-3xl hover:border-emerald-500/40 transition-all cursor-pointer overflow-hidden backdrop-blur-sm md:col-span-3"
+            >
               <div className="absolute -right-20 -bottom-20 w-96 h-96 bg-emerald-500/10 blur-[100px] rounded-full group-hover:bg-emerald-500/20 transition-all"></div>
 
               <div className="flex flex-col md:flex-row items-center gap-12">
@@ -206,14 +216,108 @@ function Home() {
           </div>
         </div>
       </section>
+
+      {/* Happiness Quotient & Intelligence Engine */}
+      <section className="py-24 px-6 border-t border-white/5 relative overflow-hidden bg-black/10">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-emerald-500/5 blur-[120px] rounded-full pointer-events-none"></div>
+        <div className="max-w-7xl mx-auto">
+          <div className="flex items-center gap-3 mb-10">
+            <div className="px-3 py-1 bg-emerald-500/10 rounded-full border border-emerald-500/20 text-xs font-black text-emerald-400 uppercase tracking-widest">
+              The Happiness Quotient
+            </div>
+            <div className="h-px flex-grow bg-white/5"></div>
+          </div>
+          
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            <div>
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-black mb-8 tracking-tighter text-white leading-[1.0]">
+                POWERED BY THE <span className="text-emerald-400">INTELLIGENCE</span> ENGINE.
+              </h2>
+              <p className="text-slate-400 text-lg mb-12 leading-relaxed max-w-xl font-medium">
+                We've applied complex probabilistic math and psychological dynamics to harmonize the network. Our AI ensures every participant stays giddy with value.
+              </p>
+              
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-10">
+                <div className="space-y-3">
+                  <div className="flex items-center gap-3 text-white font-bold">
+                    <div className="w-8 h-8 bg-emerald-500/10 rounded-lg flex items-center justify-center border border-emerald-500/20 shadow-lg">
+                      <ChartBarIcon className="w-4 h-4 text-emerald-400" />
+                    </div>
+                    Bayesian Balancer
+                  </div>
+                  <p className="text-slate-500 text-sm leading-relaxed">Dynamically adjusting rewards to find the perfect efficiency frontier for every CPA.</p>
+                </div>
+                <div className="space-y-3">
+                  <div className="flex items-center gap-3 text-white font-bold">
+                    <div className="w-8 h-8 bg-azure-500/10 rounded-lg flex items-center justify-center border border-azure-500/20 shadow-lg">
+                      <SparklesIcon className="w-4 h-4 text-azure-400" />
+                    </div>
+                    Synergy Logic
+                  </div>
+                  <p className="text-slate-500 text-sm leading-relaxed">AI-powered brand matches ensure shoppers only see gifts they statistically deserve to love.</p>
+                </div>
+                <div className="space-y-3">
+                  <div className="flex items-center gap-3 text-white font-bold">
+                    <div className="w-8 h-8 bg-purple-500/10 rounded-lg flex items-center justify-center border border-purple-500/20 shadow-lg">
+                      <BoltIcon className="w-4 h-4 text-purple-400" />
+                    </div>
+                    Velocity Tiers
+                  </div>
+                  <p className="text-slate-500 text-sm leading-relaxed">Unlocking achievement payouts for partners who drive high-quality shopper retention.</p>
+                </div>
+                <div className="space-y-3">
+                  <div className="flex items-center gap-3 text-white font-bold">
+                    <div className="w-8 h-8 bg-emerald-500/10 rounded-lg flex items-center justify-center border border-emerald-500/20 shadow-lg">
+                      <ArrowTrendingUpIcon className="w-4 h-4 text-emerald-400" />
+                    </div>
+                    Endowed Progress
+                  </div>
+                  <p className="text-slate-500 text-sm leading-relaxed">Onboarding that helps brands launch their first campaign in record time with 80% pre-filled data.</p>
+                </div>
+              </div>
+            </div>
+            <div className="relative group">
+              <div className="absolute -inset-1 bg-gradient-to-r from-emerald-500 to-azure-500 rounded-3xl blur opacity-20 group-hover:opacity-30 transition duration-1000"></div>
+              <div className="relative bg-[#0F172A] border border-white/10 rounded-3xl p-10 shadow-2xl overflow-hidden backdrop-blur-xl">
+                <div className="flex items-center justify-between mb-8">
+                  <div className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em]">Network Happiness Matrix v2.0</div>
+                  <div className="flex gap-1.5">
+                    <div className="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_10px_#10b981]"></div>
+                    <div className="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_10px_#10b981]"></div>
+                    <div className="w-2 h-2 rounded-full bg-slate-700"></div>
+                  </div>
+                </div>
+                <div className="h-64 flex items-end gap-2.5 px-2">
+                  {[45, 60, 40, 85, 55, 75, 95, 80, 85, 100].map((h, i) => (
+                    <div key={i} className="flex-1 bg-gradient-to-t from-emerald-600 to-emerald-400 rounded-t-sm shadow-inner transition-all hover:scale-105" style={{ height: `${h}%` }}></div>
+                  ))}
+                </div>
+                <div className="mt-10 pt-10 border-t border-white/5 flex justify-between items-center">
+                  <div>
+                    <div className="text-3xl font-black text-white tracking-tighter transition-all hover:text-emerald-400">+142%</div>
+                    <div className="text-[10px] text-slate-500 uppercase font-black tracking-widest mt-1">Giddy Quotient</div>
+                  </div>
+                  <div className="text-right">
+                    <div className="text-3xl font-black text-emerald-400 tracking-tighter">99.9%</div>
+                    <div className="text-[10px] text-slate-500 uppercase font-black tracking-widest mt-1">Synergy Match</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
     </>
   );
 }
 
 function App() {
-  const openPortal = (port) => {
-    const subdomain = port === 5174 ? 'brands' : 'partner';
+  const openPortal = (subdomain) => {
     const isDev = window.location.hostname === 'localhost';
+    let port = 5173; 
+    if (subdomain === 'brands') port = 5174;
+    if (subdomain === 'partners') port = 5175;
+
     window.location.href = isDev 
       ? `http://localhost:${port}` 
       : `https://${subdomain}.mojipass.com`;
@@ -229,9 +333,9 @@ function App() {
             <Logo className="h-14 md:h-16" textColor="text-[var(--color-text)]" theme={document.documentElement.getAttribute('data-theme')} />
           </Link>
           <div className="hidden md:flex items-center gap-8 text-sm font-medium text-[var(--color-text-muted)]">
-            <Link to="/#brands" className="hover:text-[var(--color-text)] transition-colors">For Brands</Link>
-            <Link to="/#merchants" className="hover:text-[var(--color-text)] transition-colors">For Merchants</Link>
-            <Link to="/#partners" className="hover:text-[var(--color-text)] transition-colors">For Partners</Link>
+            <a href="#brands" onClick={(e) => { e.preventDefault(); document.getElementById('brands').scrollIntoView({ behavior: 'smooth' }); }} className="hover:text-[var(--color-text)] transition-colors">For Brands</a>
+            <a href="#merchants" onClick={(e) => { e.preventDefault(); document.getElementById('merchants').scrollIntoView({ behavior: 'smooth' }); }} className="hover:text-[var(--color-text)] transition-colors">For Merchants</a>
+            <a href="#partners" onClick={(e) => { e.preventDefault(); document.getElementById('partners').scrollIntoView({ behavior: 'smooth' }); }} className="hover:text-[var(--color-text)] transition-colors">For Partners</a>
             <Link to="/resources" className="hover:text-[var(--color-text)] transition-colors">Resources</Link>
             <button
               onClick={() => {
@@ -244,7 +348,7 @@ function App() {
             </button>
           </div>
           <button
-            onClick={() => openPortal(5174)}
+            onClick={() => openPortal('brands')}
             className="px-6 py-2.5 bg-white/10 hover:bg-white/20 border border-white/10 rounded-full text-sm font-semibold transition-all backdrop-blur-sm"
           >
             Log In
