@@ -217,7 +217,135 @@ function Home() {
         </div>
       </section>
 
+      {/* How it Works / Step-by-Step Playbook */}
+      <section className="py-24 px-6 bg-[var(--bg-color)] border-t border-white/5 relative z-10">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-5xl font-black mb-4">The Frictionless Playbook.</h2>
+            <p className="text-slate-400 text-lg">How to win with Mojipass® in three simple steps.</p>
+          </div>
+          
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+            {/* Brands Playbook */}
+            <div className="relative group">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/10 blur-[50px] rounded-full"></div>
+              <h3 className="text-2xl font-bold mb-8 flex items-center gap-3">
+                <span className="w-8 h-8 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center text-sm border border-blue-500/30">1</span>
+                Sponsoring Brands
+              </h3>
+              <div className="space-y-6 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px before:h-full before:w-0.5 before:bg-gradient-to-b before:from-blue-500/50 before:via-white/10 before:to-transparent">
+                <div className="relative flex items-start gap-4 z-10">
+                  <div className="w-10 h-10 rounded-full bg-[var(--card-bg)] border border-blue-500/40 flex items-center justify-center shrink-0 shadow-[0_0_15px_rgba(59,130,246,0.2)]">
+                    <span className="text-blue-400 font-bold text-sm">A</span>
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-white mb-1">Set Your CPA</h4>
+                    <p className="text-sm text-slate-400 leading-relaxed tracking-wide">Determine your exact Cost-Per-Acquisition budget and upload your campaign creative in seconds.</p>
+                  </div>
+                </div>
+                <div className="relative flex items-start gap-4 z-10">
+                  <div className="w-10 h-10 rounded-full bg-[var(--card-bg)] border border-white/10 flex items-center justify-center shrink-0">
+                    <span className="text-slate-400 font-bold text-sm">B</span>
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-white mb-1">AI Matchmaking</h4>
+                    <p className="text-sm text-slate-400 leading-relaxed tracking-wide">Our Bayesian Engine instantly matches your offer to high-intent Shopify audiences.</p>
+                  </div>
+                </div>
+                <div className="relative flex items-start gap-4 z-10">
+                  <div className="w-10 h-10 rounded-full bg-[var(--card-bg)] border border-white/10 flex items-center justify-center shrink-0">
+                    <span className="text-slate-400 font-bold text-sm">C</span>
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-white mb-1">Acquire & Scale</h4>
+                    <p className="text-sm text-slate-400 leading-relaxed tracking-wide">Pay only when a shopper successfully claims your offer. Infinite, risk-free scaling.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Merchants Playbook */}
+            <div className="relative group">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-[var(--color-brand)]/10 blur-[50px] rounded-full"></div>
+              <h3 className="text-2xl font-bold mb-8 flex items-center gap-3">
+                <span className="w-8 h-8 rounded-full bg-[var(--color-brand)]/20 text-[var(--color-brand)] flex items-center justify-center text-sm border border-[var(--color-brand)]/30">2</span>
+                Shopify Merchants
+              </h3>
+              <div className="space-y-6 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px before:h-full before:w-0.5 before:bg-gradient-to-b before:from-[var(--color-brand)]/50 before:via-white/10 before:to-transparent">
+                <div className="relative flex items-start gap-4 z-10">
+                  <div className="w-10 h-10 rounded-full bg-[var(--card-bg)] border border-[var(--color-brand)]/40 flex items-center justify-center shrink-0 shadow-[0_0_15px_var(--color-brand)]">
+                    <span className="text-[var(--color-brand)] font-bold text-sm">A</span>
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-white mb-1">1-Click Install</h4>
+                    <p className="text-sm text-slate-400 leading-relaxed tracking-wide">Install the Mojipass app from the Shopify App Store. No coding required.</p>
+                  </div>
+                </div>
+                <div className="relative flex items-start gap-4 z-10">
+                  <div className="w-10 h-10 rounded-full bg-[var(--card-bg)] border border-white/10 flex items-center justify-center shrink-0">
+                    <span className="text-slate-400 font-bold text-sm">B</span>
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-white mb-1">Select Rewards</h4>
+                    <p className="text-sm text-slate-400 leading-relaxed tracking-wide">Review the AI Synergy scores and toggle on the free gifts you want to offer your shoppers.</p>
+                  </div>
+                </div>
+                <div className="relative flex items-start gap-4 z-10">
+                  <div className="w-10 h-10 rounded-full bg-[var(--card-bg)] border border-white/10 flex items-center justify-center shrink-0">
+                    <span className="text-slate-400 font-bold text-sm">C</span>
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-white mb-1">Boost AOV & Earn</h4>
+                    <p className="text-sm text-slate-400 leading-relaxed tracking-wide">Shoppers complete checkout, unlock their sponsored gift, and you earn an instant affiliate bounty.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Creators Playbook */}
+            <div className="relative group">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-purple-500/10 blur-[50px] rounded-full"></div>
+              <h3 className="text-2xl font-bold mb-8 flex items-center gap-3">
+                <span className="w-8 h-8 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center text-sm border border-purple-500/30">3</span>
+                Creators & Partners
+              </h3>
+              <div className="space-y-6 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px before:h-full before:w-0.5 before:bg-gradient-to-b before:from-purple-500/50 before:via-white/10 before:to-transparent">
+                <div className="relative flex items-start gap-4 z-10">
+                  <div className="w-10 h-10 rounded-full bg-[var(--card-bg)] border border-purple-500/40 flex items-center justify-center shrink-0 shadow-[0_0_15px_rgba(168,85,247,0.2)]">
+                    <span className="text-purple-400 font-bold text-sm">A</span>
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-white mb-1">Join the Hub</h4>
+                    <p className="text-sm text-slate-400 leading-relaxed tracking-wide">Create your dynamic profile in the Partner Portal to unlock the campaign library.</p>
+                  </div>
+                </div>
+                <div className="relative flex items-start gap-4 z-10">
+                  <div className="w-10 h-10 rounded-full bg-[var(--card-bg)] border border-white/10 flex items-center justify-center shrink-0">
+                    <span className="text-slate-400 font-bold text-sm">B</span>
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-white mb-1">Generate Links</h4>
+                    <p className="text-sm text-slate-400 leading-relaxed tracking-wide">Grab high-converting tracking links for Mojipass® enabled merchants and brands.</p>
+                  </div>
+                </div>
+                <div className="relative flex items-start gap-4 z-10">
+                  <div className="w-10 h-10 rounded-full bg-[var(--card-bg)] border border-white/10 flex items-center justify-center shrink-0">
+                    <span className="text-slate-400 font-bold text-sm">C</span>
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-white mb-1">Monetize Influence</h4>
+                    <p className="text-sm text-slate-400 leading-relaxed tracking-wide">Earn guaranteed ledger commissions the second your audience claims a sponsored reward.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
       {/* Happiness Quotient & Intelligence Engine */}
+
       <section className="py-24 px-6 border-t border-white/5 relative overflow-hidden bg-black/10">
         <div className="absolute top-0 right-0 w-96 h-96 bg-emerald-500/5 blur-[120px] rounded-full pointer-events-none"></div>
         <div className="max-w-7xl mx-auto">
