@@ -104,7 +104,7 @@ function Home() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
 
             {/* Card 1: Brands */}
-            <div id="brands" className="group relative bg-[var(--card-bg)] border border-[var(--card-border)] p-8 rounded-3xl hover:border-[var(--color-brand)]/30 transition-all cursor-pointer overflow-hidden backdrop-blur-sm">
+            <div id="brands" className="group relative bg-[var(--card-bg)] border border-[var(--card-border)] p-8 rounded-3xl hover:border-[var(--color-brand)]/30 transition-all overflow-hidden backdrop-blur-sm">
               <div className="absolute top-0 right-0 w-64 h-64 bg-[var(--color-brand)]/5 blur-[var(--glow-blur)] rounded-full group-hover:bg-[var(--color-brand)]/10 transition-all"></div>
 
               <div className="w-14 h-14 bg-blue-500/10 rounded-2xl flex items-center justify-center mb-6 border border-blue-500/20">
@@ -129,7 +129,7 @@ function Home() {
             </div>
 
             {/* Card 2: Merchants */}
-            <div id="merchants" className="group relative bg-[var(--card-bg)] border border-[var(--card-border)] p-8 rounded-3xl hover:border-[var(--color-brand)]/30 transition-all cursor-pointer overflow-hidden transform md:-translate-y-4 shadow-2xl backdrop-blur-sm">
+            <div id="merchants" className="group relative bg-[var(--card-bg)] border border-[var(--card-border)] p-8 rounded-3xl hover:border-[var(--color-brand)]/30 transition-all overflow-hidden transform md:-translate-y-4 shadow-2xl backdrop-blur-sm">
               <div className="absolute top-0 right-0 w-64 h-64 bg-[var(--color-brand)]/5 blur-[var(--glow-blur)] rounded-full group-hover:bg-[var(--color-brand)]/10 transition-all"></div>
 
               <div className="w-14 h-14 bg-[var(--color-brand)]/10 rounded-2xl flex items-center justify-center mb-6 border border-[var(--color-brand)]/20">
@@ -154,7 +154,7 @@ function Home() {
             </div>
 
             {/* Card 3: Partners */}
-            <div id="partners" className="group relative bg-[var(--card-bg)] border border-[var(--card-border)] p-8 rounded-3xl hover:border-[var(--color-brand)]/30 transition-all cursor-pointer overflow-hidden backdrop-blur-sm">
+            <div id="partners" className="group relative bg-[var(--card-bg)] border border-[var(--card-border)] p-8 rounded-3xl hover:border-[var(--color-brand)]/30 transition-all overflow-hidden backdrop-blur-sm">
               <div className="absolute top-0 right-0 w-64 h-64 bg-[var(--color-brand)]/5 blur-[var(--glow-blur)] rounded-full group-hover:bg-[var(--color-brand)]/10 transition-all"></div>
 
               <div className="w-14 h-14 bg-purple-500/10 rounded-2xl flex items-center justify-center mb-6 border border-purple-500/20">
@@ -180,8 +180,7 @@ function Home() {
 
             {/* Card 4: Consumers/Shoppers */}
             <div 
-              onClick={() => document.getElementById('consumer').scrollIntoView({ behavior: 'smooth' })}
-              className="group relative bg-gradient-to-br from-[#1E293B] to-emerald-900/20 border border-emerald-500/20 p-8 rounded-3xl hover:border-emerald-500/40 transition-all cursor-pointer overflow-hidden backdrop-blur-sm md:col-span-3"
+              className="group relative bg-[var(--card-bg)] border border-[var(--card-border)] p-8 rounded-3xl hover:border-emerald-500/40 transition-all overflow-hidden backdrop-blur-sm md:col-span-3"
             >
               <div className="absolute -right-20 -bottom-20 w-96 h-96 bg-emerald-500/10 blur-[100px] rounded-full group-hover:bg-emerald-500/20 transition-all"></div>
 
@@ -190,24 +189,25 @@ function Home() {
                   <div className="w-14 h-14 bg-emerald-500/10 rounded-2xl flex items-center justify-center mb-6 border border-emerald-500/20">
                     <SparklesIcon className="w-7 h-7 text-emerald-400" />
                   </div>
-                  <h3 className="text-3xl font-bold mb-4 text-white">The Everyday Shopper</h3>
-                  <p className="text-slate-300 text-lg mb-6 leading-relaxed">
+                  <h3 className="text-3xl font-bold mb-4" style={{ color: 'var(--color-text)' }}>The Everyday Shopper</h3>
+                  <p className="text-lg mb-6 leading-relaxed" style={{ color: 'var(--color-text-muted)' }}>
                     The ultimate winner. Shoppers unlock premium, full-sized trials and exclusive gifts from top-tier brands—simply for making a purchase they already planned. No hoops, no friction, just pure delight at checkout.
                   </p>
                   <div className="flex items-center gap-6 text-emerald-400 font-bold">
-                    <div className="flex items-center gap-2 px-4 py-2 bg-emerald-500/10 rounded-full border border-emerald-500/10 tracking-tight text-sm">
+                    <div className="flex items-center gap-2 px-4 py-2 flex-wrap bg-emerald-500/10 rounded-full border border-emerald-500/20 tracking-tight text-sm">
                       <BoltIcon className="w-4 h-4" /> Zero Extra Cost
                     </div>
-                    <div className="flex items-center gap-2 px-4 py-2 bg-emerald-500/10 rounded-full border border-emerald-500/10 tracking-tight text-sm">
+                    <div className="flex items-center gap-2 px-4 py-2 flex-wrap bg-emerald-500/10 rounded-full border border-emerald-500/20 tracking-tight text-sm">
                       <GiftIcon className="w-4 h-4" /> Full-Sized Rewards
                     </div>
                   </div>
                 </div>
-                <div className="relative w-full md:w-80 h-48 bg-white/5 border border-white/10 rounded-2xl backdrop-blur-md flex items-center justify-center overflow-hidden group-hover:border-emerald-500/30 transition-all">
-                  <div className="text-center">
-                    <div className="text-xs text-slate-500 uppercase tracking-widest mb-2 font-bold opacity-50">Mojipass® Revealed</div>
-                    <div className="text-2xl font-black text-white tracking-tighter">GIFT UNLOCKED</div>
-                    <div className="text-emerald-400 text-sm font-bold">Complimentary with Purchase</div>
+                <div className="relative w-full md:w-80 h-48 bg-[var(--bg-color)] border border-[var(--card-border)] rounded-2xl backdrop-blur-md flex items-center justify-center overflow-hidden group-hover:shadow-[0_0_20px_rgba(16,185,129,0.2)] transition-all relative z-10">
+                  <div className="absolute inset-0 transition-opacity bg-gradient-to-br from-emerald-500/5 to-transparent opacity-50"></div>
+                  <div className="text-center relative z-20">
+                    <div className="text-xs uppercase tracking-widest mb-2 font-bold" style={{ color: 'var(--color-text-muted)' }}>Mojipass® Revealed</div>
+                    <div className="text-2xl font-black tracking-tighter" style={{ color: 'var(--color-text)' }}>GIFT UNLOCKED</div>
+                    <div className="text-emerald-500 text-sm font-bold">Complimentary with Purchase</div>
                   </div>
                 </div>
               </div>
@@ -452,7 +452,7 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0F172A] text-slate-50 selection:bg-emerald-500 selection:text-white font-sans overflow-x-hidden flex flex-col">
+    <div className="min-h-screen bg-[var(--color-bg)] text-[var(--color-text)] selection:bg-emerald-500 selection:text-white font-sans overflow-x-hidden flex flex-col transition-colors duration-500">
 
       {/* Navigation */}
       <nav className="fixed w-full z-50 bg-[var(--color-bg)]/80 backdrop-blur-md border-b border-[var(--card-border)]">
@@ -477,9 +477,9 @@ function App() {
           </div>
           <button
             onClick={() => openPortal('brands')}
-            className="px-6 py-2.5 bg-white/10 hover:bg-white/20 border border-white/10 rounded-full text-sm font-semibold transition-all backdrop-blur-sm"
+            className="px-6 py-2.5 bg-[var(--card-bg)] hover:brightness-110 border border-[var(--card-border)] text-[var(--color-text)] rounded-full text-sm font-semibold transition-all shadow-sm"
           >
-            Log In
+            Brand Login
           </button>
         </div>
       </nav>

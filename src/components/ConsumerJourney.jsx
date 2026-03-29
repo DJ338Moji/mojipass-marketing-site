@@ -28,8 +28,8 @@ const JourneyStep = ({ icon: Icon, title, description, delay, colorClass }) => {
           className={`absolute inset-0 bg-${colorClass}/30 rounded-2xl blur-xl`}
         ></motion.div>
       </div>
-      <h4 className="text-xl font-bold text-white mb-3 tracking-tight z-10">{title}</h4>
-      <p className="text-slate-400 text-sm leading-relaxed z-10">{description}</p>
+      <h4 className="text-xl font-bold text-[var(--color-text)] mb-3 tracking-tight z-10">{title}</h4>
+      <p className="text-[var(--color-text-muted)] text-sm leading-relaxed z-10">{description}</p>
       
       {/* Decorative inner glow */}
       <div className={`absolute -bottom-10 -right-10 w-32 h-32 bg-${colorClass}/5 blur-3xl rounded-full group-hover:bg-${colorClass}/10 transition-all`}></div>
@@ -67,10 +67,10 @@ export default function ConsumerJourney() {
             <Zap className="w-3 h-3 fill-current" />
             <span>Interactive Workflow</span>
           </motion.div>
-          <h2 className="text-4xl md:text-6xl font-black text-white mb-8 font-display tracking-tight leading-tight">
+          <h2 className="text-4xl md:text-6xl font-black text-[var(--color-text)] mb-8 font-display tracking-tight leading-tight">
             The Zero-Friction Funnel
           </h2>
-          <p className="text-slate-400 text-xl max-w-3xl mx-auto leading-relaxed font-medium">
+          <p className="text-[var(--color-text-muted)] text-xl max-w-3xl mx-auto leading-relaxed font-medium">
             Watch how Mojipass® drives value across the retail loop—from influencer discovery to the ultimate gift at checkout.
           </p>
         </div>
@@ -82,7 +82,7 @@ export default function ConsumerJourney() {
                <div className="w-12 h-12 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center font-bold text-emerald-400 shadow-[0_0_15px_rgba(16,185,129,0.1)]">
                  01
                </div>
-               <h3 className="text-2xl font-bold text-white tracking-tight">The Creator-Powered Bridge</h3>
+               <h3 className="text-2xl font-bold text-[var(--color-text)] tracking-tight">The Creator-Powered Bridge</h3>
             </div>
             
             <div className="relative grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
@@ -117,7 +117,7 @@ export default function ConsumerJourney() {
                <div className="w-12 h-12 rounded-full bg-blue-500/10 border border-blue-500/20 flex items-center justify-center font-bold text-blue-400 shadow-[0_0_15px_rgba(59,130,246,0.1)]">
                  02
                </div>
-               <h3 className="text-2xl font-bold text-white tracking-tight">Merchant Native Activation</h3>
+               <h3 className="text-2xl font-bold text-[var(--color-text)] tracking-tight">Merchant Native Activation</h3>
             </div>
             
             <div className="relative grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
@@ -155,8 +155,8 @@ export default function ConsumerJourney() {
           className="mt-32 text-center p-12 bg-white/5 border border-white/10 rounded-[3rem] backdrop-blur-xl relative overflow-hidden"
         >
           <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/5 via-transparent to-blue-500/5"></div>
-          <h3 className="text-2xl md:text-4xl font-bold text-white mb-6 relative z-10 font-display">Ready to see the dashboard in action?</h3>
-          <p className="text-slate-400 mb-10 relative z-10 max-w-2xl mx-auto">Experience the live data, attribution ledger, and partner marketplace with our guided demo.</p>
+          <h3 className="text-2xl md:text-4xl font-bold text-[var(--color-text)] mb-6 relative z-10 font-display">Ready to see the dashboard in action?</h3>
+          <p className="text-[var(--color-text-muted)] mb-10 relative z-10 max-w-2xl mx-auto">Experience the live data, attribution ledger, and partner marketplace with our guided demo.</p>
           <button 
             onClick={() => window.location.href = 'https://app.mojipass.com'}
             className="px-10 py-4 bg-white text-black font-black rounded-full hover:bg-emerald-400 hover:text-white transition-all transform hover:scale-110 active:scale-95 relative z-10 uppercase tracking-tighter text-lg shadow-2xl"
