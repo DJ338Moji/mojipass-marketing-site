@@ -20,8 +20,8 @@
   --color-brand-hover: #1e40af; /* Deep Navy 800 */
   --color-accent: #3b82f6; /* Blue 500 */
   --color-bg: #f8fafc; /* Slate 50 */
-  --color-text: #0f172a; /* Slate 900 */
-  --color-text-muted: #475569; /* Slate 600 */
+  --color-text: #020617; /* Slate 950 - Complete Black Contrast */
+  --color-text-muted: #1e293b; /* Slate 800 - Ultra High Contrast */
   --glow-opacity: 0.05;
   --glow-blur: 40px;
   --card-bg: #ffffff; /* White */
