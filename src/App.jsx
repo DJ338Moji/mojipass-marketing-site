@@ -18,18 +18,19 @@ import ConsumerJourney from './components/ConsumerJourney';
 import Resources from './pages/Resources';
 import AiAssistant from './components/AiAssistant';
 
+const openPortal = (subdomain) => {
+  const isDev = window.location.hostname === 'localhost';
+  let port = 5173; 
+  if (subdomain === 'brand') port = 5174;
+  if (subdomain === 'partners') port = 5175;
+
+  window.location.href = isDev 
+    ? `http://localhost:${port}` 
+    : `https://${subdomain}.mojipass.com`;
+};
+
+
 function Home() {
-  const openPortal = (subdomain) => {
-    const isDev = window.location.hostname === 'localhost';
-    let port = 5173; 
-    if (subdomain === 'brands') port = 5174;
-    if (subdomain === 'partners') port = 5175;
-
-    window.location.href = isDev 
-      ? `http://localhost:${port}` 
-      : `https://${subdomain}.mojipass.com`;
-  };
-
   return (
     <>
       {/* Hero Section */}
@@ -44,27 +45,27 @@ function Home() {
           </div>
 
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter leading-[1.0] mb-8 drop-shadow-2xl">
-            <span className="block text-white mb-2">THE WORLD'S FIRST</span>
+            <span className="block text-[var(--color-text)] mb-2">THE WORLD'S FIRST</span>
             <span className="block bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 via-azure-400 to-blue-500 pb-2">
               FRICTIONLESS
             </span>
-            <span className="block text-white">CHECKOUT NETWORK.</span>
+            <span className="block text-[var(--color-text)]">CHECKOUT NETWORK.</span>
           </h1>
           
-          <p className="text-xl md:text-2xl text-slate-300 max-w-2xl mx-auto mb-12 leading-relaxed font-medium">
+          <p className="text-xl md:text-2xl text-[var(--color-text-muted)] max-w-2xl mx-auto mb-12 leading-relaxed font-medium">
             We bridge the gap between Brands, Merchants, and Creators to reward the Shopper—the world's first purely performance-based retail network. <span className="text-emerald-400">We only win when you win.</span>
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
             <button
               onClick={() => document.getElementById('tri-sided').scrollIntoView({ behavior: 'smooth' })}
-              className="px-8 py-4 bg-gradient-to-r from-[var(--color-brand)] to-[var(--color-accent)] hover:brightness-110 text-white rounded-full font-bold text-lg shadow-[0_0_40px_-10px_var(--color-brand)] transition-all transform hover:scale-105 flex items-center gap-2"
+              className="px-8 py-4 bg-gradient-to-r from-[var(--color-brand)] to-[var(--color-accent)] hover:brightness-110 text-[var(--color-text)] rounded-full font-bold text-lg shadow-[0_0_40px_-10px_var(--color-brand)] transition-all transform hover:scale-105 flex items-center gap-2"
             >
               Choose Your Portal <ArrowRightIcon className="w-5 h-5" />
             </button>
           </div>
 
-          <div className="pt-8 flex items-center justify-center gap-3 text-slate-400 text-xs font-black uppercase tracking-[0.2em]">
+          <div className="pt-8 flex items-center justify-center gap-3 text-[var(--color-text-muted)] text-xs font-black uppercase tracking-[0.2em]">
             <div className="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_10px_#10b981] animate-pulse"></div>
             Purely Performance Periodic Model • Zero Subscription Fees
           </div>
@@ -73,16 +74,16 @@ function Home() {
 
       {/* Social Proof Bar */}
       <div className="border-y border-white/5 bg-white/5 backdrop-blur-sm py-8 overflow-hidden">
-        <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-8 text-slate-400 font-medium text-sm">
+        <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-8 text-[var(--color-text-muted)] font-medium text-sm">
           <div className="flex items-center gap-3">
-            <ShieldCheckIcon className="w-6 h-6 text-slate-500" />
+            <ShieldCheckIcon className="w-6 h-6 text-[var(--color-text-muted)]" />
             Guaranteed Closed-Loop Attribution
           </div>
           <div className="flex items-center gap-3">
             <span className="text-emerald-400 font-bold">100%</span> Seamless Shopify Integration
           </div>
           <div className="flex items-center gap-3">
-            <GlobeAltIcon className="w-6 h-6 text-slate-500" />
+            <GlobeAltIcon className="w-6 h-6 text-[var(--color-text-muted)]" />
             Universal SDK Incoming
           </div>
         </div>
@@ -94,11 +95,11 @@ function Home() {
       <section id="tri-sided" className="py-24 px-6 relative z-10">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <h1 className="text-6xl md:text-8xl font-black text-white mb-8 tracking-tighter">
+            <h1 className="text-6xl md:text-8xl font-black text-[var(--color-text)] mb-8 tracking-tighter">
               MOJIPASS®
             </h1>
             <h2 className="text-3xl md:text-5xl font-bold mb-4">One Ecosystem. Four Winners.</h2>
-            <p className="text-slate-400 text-lg">See how Mojipass® creates value for every player in the retail loop.</p>
+            <p className="text-[var(--color-text-muted)] text-lg">See how Mojipass® creates value for every player in the retail loop.</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -121,7 +122,7 @@ function Home() {
               </ul>
 
               <button
-                onClick={() => openPortal('brands')}
+                onClick={() => openPortal('brand')}
                 className="w-full py-4 rounded-xl bg-blue-500/10 text-blue-400 font-bold hover:bg-blue-500/20 border border-blue-500/20 transition-all flex justify-center items-center gap-2 group-hover:shadow-[0_0_20px_-5px_rgba(59,130,246,0.3)]"
               >
                 Access Brand Portal <ArrowRightIcon className="w-4 h-4" />
@@ -147,7 +148,7 @@ function Home() {
 
               <button
                 onClick={() => openPortal('app')}
-                className="w-full py-4 rounded-xl bg-[var(--color-brand)] text-white font-bold hover:brightness-110 transition-all flex justify-center items-center gap-2 shadow-[0_0_20px_-5px_var(--color-brand)]"
+                className="w-full py-4 rounded-xl bg-[var(--color-brand)] text-[var(--color-text)] font-bold hover:brightness-110 transition-all flex justify-center items-center gap-2 shadow-[0_0_20px_-5px_var(--color-brand)]"
               >
                 Install Shopify App <ArrowRightIcon className="w-4 h-4" />
               </button>
@@ -222,7 +223,7 @@ function Home() {
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-5xl font-black mb-4">The Frictionless Playbook.</h2>
-            <p className="text-slate-400 text-lg">How to win with Mojipass® in three simple steps.</p>
+            <p className="text-[var(--color-text-muted)] text-lg">How to win with Mojipass® in three simple steps.</p>
           </div>
           
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
@@ -239,26 +240,26 @@ function Home() {
                     <span className="text-blue-400 font-bold text-sm">A</span>
                   </div>
                   <div>
-                    <h4 className="font-bold text-white mb-1">Set Your CPA</h4>
-                    <p className="text-sm text-slate-400 leading-relaxed tracking-wide">Determine your exact Cost-Per-Acquisition budget and upload your campaign creative in seconds.</p>
+                    <h4 className="font-bold text-[var(--color-text)] mb-1">Set Your CPA</h4>
+                    <p className="text-sm text-[var(--color-text-muted)] leading-relaxed tracking-wide">Determine your exact Cost-Per-Acquisition budget and upload your campaign creative in seconds.</p>
                   </div>
                 </div>
                 <div className="relative flex items-start gap-4 z-10">
                   <div className="w-10 h-10 rounded-full bg-[var(--card-bg)] border border-white/10 flex items-center justify-center shrink-0">
-                    <span className="text-slate-400 font-bold text-sm">B</span>
+                    <span className="text-[var(--color-text-muted)] font-bold text-sm">B</span>
                   </div>
                   <div>
-                    <h4 className="font-bold text-white mb-1">AI Matchmaking</h4>
-                    <p className="text-sm text-slate-400 leading-relaxed tracking-wide">Our Bayesian Engine instantly matches your offer to high-intent Shopify audiences.</p>
+                    <h4 className="font-bold text-[var(--color-text)] mb-1">AI Matchmaking</h4>
+                    <p className="text-sm text-[var(--color-text-muted)] leading-relaxed tracking-wide">Our Bayesian Engine instantly matches your offer to high-intent Shopify audiences.</p>
                   </div>
                 </div>
                 <div className="relative flex items-start gap-4 z-10">
                   <div className="w-10 h-10 rounded-full bg-[var(--card-bg)] border border-white/10 flex items-center justify-center shrink-0">
-                    <span className="text-slate-400 font-bold text-sm">C</span>
+                    <span className="text-[var(--color-text-muted)] font-bold text-sm">C</span>
                   </div>
                   <div>
-                    <h4 className="font-bold text-white mb-1">Acquire & Scale</h4>
-                    <p className="text-sm text-slate-400 leading-relaxed tracking-wide">Pay only when a shopper successfully claims your offer. Infinite, risk-free scaling.</p>
+                    <h4 className="font-bold text-[var(--color-text)] mb-1">Acquire & Scale</h4>
+                    <p className="text-sm text-[var(--color-text-muted)] leading-relaxed tracking-wide">Pay only when a shopper successfully claims your offer. Infinite, risk-free scaling.</p>
                   </div>
                 </div>
               </div>
@@ -277,26 +278,26 @@ function Home() {
                     <span className="text-[var(--color-brand)] font-bold text-sm">A</span>
                   </div>
                   <div>
-                    <h4 className="font-bold text-white mb-1">1-Click Install</h4>
-                    <p className="text-sm text-slate-400 leading-relaxed tracking-wide">Install the Mojipass app from the Shopify App Store. No coding required.</p>
+                    <h4 className="font-bold text-[var(--color-text)] mb-1">1-Click Install</h4>
+                    <p className="text-sm text-[var(--color-text-muted)] leading-relaxed tracking-wide">Install the Mojipass app from the Shopify App Store. No coding required.</p>
                   </div>
                 </div>
                 <div className="relative flex items-start gap-4 z-10">
                   <div className="w-10 h-10 rounded-full bg-[var(--card-bg)] border border-white/10 flex items-center justify-center shrink-0">
-                    <span className="text-slate-400 font-bold text-sm">B</span>
+                    <span className="text-[var(--color-text-muted)] font-bold text-sm">B</span>
                   </div>
                   <div>
-                    <h4 className="font-bold text-white mb-1">Select Rewards</h4>
-                    <p className="text-sm text-slate-400 leading-relaxed tracking-wide">Review the AI Synergy scores and toggle on the free gifts you want to offer your shoppers.</p>
+                    <h4 className="font-bold text-[var(--color-text)] mb-1">Select Rewards</h4>
+                    <p className="text-sm text-[var(--color-text-muted)] leading-relaxed tracking-wide">Review the AI Synergy scores and toggle on the free gifts you want to offer your shoppers.</p>
                   </div>
                 </div>
                 <div className="relative flex items-start gap-4 z-10">
                   <div className="w-10 h-10 rounded-full bg-[var(--card-bg)] border border-white/10 flex items-center justify-center shrink-0">
-                    <span className="text-slate-400 font-bold text-sm">C</span>
+                    <span className="text-[var(--color-text-muted)] font-bold text-sm">C</span>
                   </div>
                   <div>
-                    <h4 className="font-bold text-white mb-1">Boost AOV & Earn</h4>
-                    <p className="text-sm text-slate-400 leading-relaxed tracking-wide">Shoppers complete checkout, unlock their sponsored gift, and you earn an instant affiliate bounty.</p>
+                    <h4 className="font-bold text-[var(--color-text)] mb-1">Boost AOV & Earn</h4>
+                    <p className="text-sm text-[var(--color-text-muted)] leading-relaxed tracking-wide">Shoppers complete checkout, unlock their sponsored gift, and you earn an instant affiliate bounty.</p>
                   </div>
                 </div>
               </div>
@@ -315,26 +316,26 @@ function Home() {
                     <span className="text-purple-400 font-bold text-sm">A</span>
                   </div>
                   <div>
-                    <h4 className="font-bold text-white mb-1">Join the Hub</h4>
-                    <p className="text-sm text-slate-400 leading-relaxed tracking-wide">Create your dynamic profile in the Partner Portal to unlock the campaign library.</p>
+                    <h4 className="font-bold text-[var(--color-text)] mb-1">Join the Hub</h4>
+                    <p className="text-sm text-[var(--color-text-muted)] leading-relaxed tracking-wide">Create your dynamic profile in the Partner Portal to unlock the campaign library.</p>
                   </div>
                 </div>
                 <div className="relative flex items-start gap-4 z-10">
                   <div className="w-10 h-10 rounded-full bg-[var(--card-bg)] border border-white/10 flex items-center justify-center shrink-0">
-                    <span className="text-slate-400 font-bold text-sm">B</span>
+                    <span className="text-[var(--color-text-muted)] font-bold text-sm">B</span>
                   </div>
                   <div>
-                    <h4 className="font-bold text-white mb-1">Generate Links</h4>
-                    <p className="text-sm text-slate-400 leading-relaxed tracking-wide">Grab high-converting tracking links for Mojipass® enabled merchants and brands.</p>
+                    <h4 className="font-bold text-[var(--color-text)] mb-1">Generate Links</h4>
+                    <p className="text-sm text-[var(--color-text-muted)] leading-relaxed tracking-wide">Grab high-converting tracking links for Mojipass® enabled merchants and brands.</p>
                   </div>
                 </div>
                 <div className="relative flex items-start gap-4 z-10">
                   <div className="w-10 h-10 rounded-full bg-[var(--card-bg)] border border-white/10 flex items-center justify-center shrink-0">
-                    <span className="text-slate-400 font-bold text-sm">C</span>
+                    <span className="text-[var(--color-text-muted)] font-bold text-sm">C</span>
                   </div>
                   <div>
-                    <h4 className="font-bold text-white mb-1">Monetize Influence</h4>
-                    <p className="text-sm text-slate-400 leading-relaxed tracking-wide">Earn guaranteed ledger commissions the second your audience claims a sponsored reward.</p>
+                    <h4 className="font-bold text-[var(--color-text)] mb-1">Monetize Influence</h4>
+                    <p className="text-sm text-[var(--color-text-muted)] leading-relaxed tracking-wide">Earn guaranteed ledger commissions the second your audience claims a sponsored reward.</p>
                   </div>
                 </div>
               </div>
@@ -358,49 +359,49 @@ function Home() {
           
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div>
-              <h2 className="text-4xl md:text-5xl lg:text-6xl font-black mb-8 tracking-tighter text-white leading-[1.0]">
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-black mb-8 tracking-tighter text-[var(--color-text)] leading-[1.0]">
                 POWERED BY THE <span className="text-emerald-400">INTELLIGENCE</span> ENGINE.
               </h2>
-              <p className="text-slate-400 text-lg mb-12 leading-relaxed max-w-xl font-medium">
+              <p className="text-[var(--color-text-muted)] text-lg mb-12 leading-relaxed max-w-xl font-medium">
                 We've applied complex probabilistic math and psychological dynamics to harmonize the network. Our AI ensures every participant stays giddy with value.
               </p>
               
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-10">
                 <div className="space-y-3">
-                  <div className="flex items-center gap-3 text-white font-bold">
+                  <div className="flex items-center gap-3 text-[var(--color-text)] font-bold">
                     <div className="w-8 h-8 bg-emerald-500/10 rounded-lg flex items-center justify-center border border-emerald-500/20 shadow-lg">
                       <ChartBarIcon className="w-4 h-4 text-emerald-400" />
                     </div>
                     Bayesian Balancer
                   </div>
-                  <p className="text-slate-500 text-sm leading-relaxed">Dynamically adjusting rewards to find the perfect efficiency frontier for every CPA.</p>
+                  <p className="text-[var(--color-text-muted)] text-sm leading-relaxed">Dynamically adjusting rewards to find the perfect efficiency frontier for every CPA.</p>
                 </div>
                 <div className="space-y-3">
-                  <div className="flex items-center gap-3 text-white font-bold">
+                  <div className="flex items-center gap-3 text-[var(--color-text)] font-bold">
                     <div className="w-8 h-8 bg-azure-500/10 rounded-lg flex items-center justify-center border border-azure-500/20 shadow-lg">
                       <SparklesIcon className="w-4 h-4 text-azure-400" />
                     </div>
                     Synergy Logic
                   </div>
-                  <p className="text-slate-500 text-sm leading-relaxed">AI-powered brand matches ensure shoppers only see gifts they statistically deserve to love.</p>
+                  <p className="text-[var(--color-text-muted)] text-sm leading-relaxed">AI-powered brand matches ensure shoppers only see gifts they statistically deserve to love.</p>
                 </div>
                 <div className="space-y-3">
-                  <div className="flex items-center gap-3 text-white font-bold">
+                  <div className="flex items-center gap-3 text-[var(--color-text)] font-bold">
                     <div className="w-8 h-8 bg-purple-500/10 rounded-lg flex items-center justify-center border border-purple-500/20 shadow-lg">
                       <BoltIcon className="w-4 h-4 text-purple-400" />
                     </div>
                     Velocity Tiers
                   </div>
-                  <p className="text-slate-500 text-sm leading-relaxed">Unlocking achievement payouts for partners who drive high-quality shopper retention.</p>
+                  <p className="text-[var(--color-text-muted)] text-sm leading-relaxed">Unlocking achievement payouts for partners who drive high-quality shopper retention.</p>
                 </div>
                 <div className="space-y-3">
-                  <div className="flex items-center gap-3 text-white font-bold">
+                  <div className="flex items-center gap-3 text-[var(--color-text)] font-bold">
                     <div className="w-8 h-8 bg-emerald-500/10 rounded-lg flex items-center justify-center border border-emerald-500/20 shadow-lg">
                       <ArrowTrendingUpIcon className="w-4 h-4 text-emerald-400" />
                     </div>
                     Endowed Progress
                   </div>
-                  <p className="text-slate-500 text-sm leading-relaxed">Onboarding that helps brands launch their first campaign in record time with 80% pre-filled data.</p>
+                  <p className="text-[var(--color-text-muted)] text-sm leading-relaxed">Onboarding that helps brands launch their first campaign in record time with 80% pre-filled data.</p>
                 </div>
               </div>
             </div>
@@ -408,7 +409,7 @@ function Home() {
               <div className="absolute -inset-1 bg-gradient-to-r from-emerald-500 to-azure-500 rounded-3xl blur opacity-20 group-hover:opacity-30 transition duration-1000"></div>
               <div className="relative bg-[#0F172A] border border-white/10 rounded-3xl p-10 shadow-2xl overflow-hidden backdrop-blur-xl">
                 <div className="flex items-center justify-between mb-8">
-                  <div className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em]">Network Happiness Matrix v2.0</div>
+                  <div className="text-[10px] font-black text-[var(--color-text-muted)] uppercase tracking-[0.2em]">Network Happiness Matrix v2.0</div>
                   <div className="flex gap-1.5">
                     <div className="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_10px_#10b981]"></div>
                     <div className="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_10px_#10b981]"></div>
@@ -422,12 +423,12 @@ function Home() {
                 </div>
                 <div className="mt-10 pt-10 border-t border-white/5 flex justify-between items-center">
                   <div>
-                    <div className="text-3xl font-black text-white tracking-tighter transition-all hover:text-emerald-400">+142%</div>
-                    <div className="text-[10px] text-slate-500 uppercase font-black tracking-widest mt-1">Giddy Quotient</div>
+                    <div className="text-3xl font-black text-[var(--color-text)] tracking-tighter transition-all hover:text-emerald-400">+142%</div>
+                    <div className="text-[10px] text-[var(--color-text-muted)] uppercase font-black tracking-widest mt-1">Giddy Quotient</div>
                   </div>
                   <div className="text-right">
                     <div className="text-3xl font-black text-emerald-400 tracking-tighter">99.9%</div>
-                    <div className="text-[10px] text-slate-500 uppercase font-black tracking-widest mt-1">Synergy Match</div>
+                    <div className="text-[10px] text-[var(--color-text-muted)] uppercase font-black tracking-widest mt-1">Synergy Match</div>
                   </div>
                 </div>
               </div>
@@ -440,17 +441,6 @@ function Home() {
 }
 
 function App() {
-  const openPortal = (subdomain) => {
-    const isDev = window.location.hostname === 'localhost';
-    let port = 5173; 
-    if (subdomain === 'brands') port = 5174;
-    if (subdomain === 'partners') port = 5175;
-
-    window.location.href = isDev 
-      ? `http://localhost:${port}` 
-      : `https://${subdomain}.mojipass.com`;
-  };
-
   return (
     <div className="min-h-screen bg-[var(--color-bg)] text-[var(--color-text)] selection:bg-emerald-500 selection:text-white font-sans overflow-x-hidden flex flex-col transition-colors duration-500">
 
@@ -476,7 +466,7 @@ function App() {
             </button>
           </div>
           <button
-            onClick={() => openPortal('brands')}
+            onClick={() => openPortal('brand')}
             className="px-6 py-2.5 bg-[var(--card-bg)] hover:brightness-110 border border-[var(--card-border)] text-[var(--color-text)] rounded-full text-sm font-semibold transition-all shadow-sm"
           >
             Brand Login
@@ -495,7 +485,7 @@ function App() {
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-white/5 py-12 text-center text-slate-500 text-sm mt-12 bg-black/20">
+      <footer className="border-t border-white/5 py-12 text-center text-[var(--color-text-muted)] text-sm mt-12 bg-black/20">
         <div className="flex justify-center mb-6 opacity-75 grayscale hover:grayscale-0 hover:opacity-100 transition-all">
           <Link to="/">
             <Logo className="h-10" showText={false} />
