@@ -20,12 +20,13 @@ import AiAssistant from './components/AiAssistant';
 
 const openPortal = (subdomain) => {
   const isDev = window.location.hostname === 'localhost';
-  let port = 5173; 
+  let port = 5173;
   if (subdomain === 'brand') port = 5174;
-  if (subdomain === 'partners') port = 5175;
+  if (subdomain === 'partner') port = 5175;
+  if (subdomain === 'app') port = 5176;
 
-  window.location.href = isDev 
-    ? `http://localhost:${port}` 
+  window.location.href = isDev
+    ? `http://localhost:${port}`
     : `https://${subdomain}.mojipass.com`;
 };
 
@@ -51,7 +52,7 @@ function Home() {
             </span>
             <span className="block text-[var(--color-text)]">CHECKOUT NETWORK.</span>
           </h1>
-          
+
           <p className="text-xl md:text-2xl text-[var(--color-text-muted)] max-w-2xl mx-auto mb-12 leading-relaxed font-medium">
             We bridge the gap between Brands, Merchants, and Creators to reward the Shopper—the world's first purely performance-based retail network. <span className="text-emerald-400">We only win when you win.</span>
           </p>
@@ -172,7 +173,7 @@ function Home() {
               </ul>
 
               <button
-                onClick={() => openPortal('partners')}
+                onClick={() => openPortal('partner')}
                 className="w-full py-4 rounded-xl bg-purple-500/10 text-purple-400 font-bold hover:bg-purple-500/20 border border-purple-500/20 transition-all flex justify-center items-center gap-2 group-hover:shadow-[0_0_20px_-5px_rgba(168,85,247,0.3)]"
               >
                 Access Partner Hub <ArrowRightIcon className="w-4 h-4" />
@@ -180,7 +181,7 @@ function Home() {
             </div>
 
             {/* Card 4: Consumers/Shoppers */}
-            <div 
+            <div
               className="group relative bg-[var(--card-bg)] border border-[var(--card-border)] p-8 rounded-3xl hover:border-emerald-500/40 transition-all overflow-hidden backdrop-blur-sm md:col-span-3"
             >
               <div className="absolute -right-20 -bottom-20 w-96 h-96 bg-emerald-500/10 blur-[100px] rounded-full group-hover:bg-emerald-500/20 transition-all"></div>
@@ -225,7 +226,7 @@ function Home() {
             <h2 className="text-3xl md:text-5xl font-black mb-4">The Frictionless Playbook.</h2>
             <p className="text-[var(--color-text-muted)] text-lg">How to win with Mojipass® in three simple steps.</p>
           </div>
-          
+
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
             {/* Brands Playbook */}
             <div className="relative group">
@@ -356,7 +357,7 @@ function Home() {
             </div>
             <div className="h-px flex-grow bg-white/5"></div>
           </div>
-          
+
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div>
               <h2 className="text-4xl md:text-5xl lg:text-6xl font-black mb-8 tracking-tighter text-[var(--color-text)] leading-[1.0]">
@@ -365,7 +366,7 @@ function Home() {
               <p className="text-[var(--color-text-muted)] text-lg mb-12 leading-relaxed max-w-xl font-medium">
                 We've applied complex probabilistic math and psychological dynamics to harmonize the network. Our AI ensures every participant stays giddy with value.
               </p>
-              
+
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-10">
                 <div className="space-y-3">
                   <div className="flex items-center gap-3 text-[var(--color-text)] font-bold">
@@ -441,6 +442,8 @@ function Home() {
 }
 
 function App() {
+  const [isLoginOpen, setIsLoginOpen] = React.useState(false);
+
   return (
     <div className="min-h-screen bg-[var(--color-bg)] text-[var(--color-text)] selection:bg-emerald-500 selection:text-white font-sans overflow-x-hidden flex flex-col transition-colors duration-500">
 
@@ -465,12 +468,47 @@ function App() {
               Toggle V2.0
             </button>
           </div>
-          <button
-            onClick={() => openPortal('brand')}
-            className="px-6 py-2.5 bg-[var(--card-bg)] hover:brightness-110 border border-[var(--card-border)] text-[var(--color-text)] rounded-full text-sm font-semibold transition-all shadow-sm"
-          >
-            Brand Login
-          </button>
+          <div className="relative">
+            <button
+              onClick={() => setIsLoginOpen(!isLoginOpen)}
+              onBlur={() => setTimeout(() => setIsLoginOpen(false), 200)}
+              className="px-6 py-2.5 bg-[var(--card-bg)] hover:brightness-110 border border-[var(--card-border)] text-[var(--color-text)] rounded-full text-sm font-semibold flex items-center gap-2 transition-all shadow-sm"
+            >
+              Log In
+              <svg className={`w-4 h-4 transition-transform ${isLoginOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+
+            {isLoginOpen && (
+              <div className="absolute right-0 mt-2 w-64 bg-[var(--card-bg)] border border-[var(--card-border)] rounded-2xl shadow-2xl py-2 z-50 animate-fade-in-up">
+                <div className="px-4 py-2 text-xs font-black text-[var(--color-text-muted)] uppercase tracking-wider border-b border-[var(--card-border)] mb-2">
+                  Select Your Portal
+                </div>
+                <button
+                  onClick={() => openPortal('brand')}
+                  className="w-full text-left px-4 py-3 hover:bg-[var(--color-text)] hover:bg-opacity-5 text-sm font-bold transition-colors flex flex-col items-start"
+                >
+                  <span className="text-[var(--color-text)]">Brands</span>
+                  <span className="text-xs text-[var(--color-text-muted)] font-medium mt-0.5">Manage your campaigns</span>
+                </button>
+                <button
+                  onClick={() => openPortal('app')}
+                  className="w-full text-left px-4 py-3 hover:bg-[var(--color-text)] hover:bg-opacity-5 text-sm font-bold transition-colors flex flex-col items-start"
+                >
+                  <span className="text-[var(--color-text)]">Merchants</span>
+                  <span className="text-xs text-[var(--color-text-muted)] font-medium mt-0.5">Access Shopify dashboard</span>
+                </button>
+                <button
+                  onClick={() => openPortal('partner')}
+                  className="w-full text-left px-4 py-3 hover:bg-[var(--color-text)] hover:bg-opacity-5 text-sm font-bold transition-colors flex flex-col items-start border-t border-[var(--card-border)] mt-2 pt-3"
+                >
+                  <span className="text-[var(--color-text)]">Partners & Creators</span>
+                  <span className="text-xs text-[var(--color-text-muted)] font-medium mt-0.5">Track your commissions</span>
+                </button>
+              </div>
+            )}
+          </div>
         </div>
       </nav>
 
