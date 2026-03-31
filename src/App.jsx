@@ -408,7 +408,7 @@ function Home() {
             </div>
             <div className="relative group">
               <div className="absolute -inset-1 bg-gradient-to-r from-emerald-500 to-azure-500 rounded-3xl blur opacity-20 group-hover:opacity-30 transition duration-1000"></div>
-              <div className="relative bg-[#0F172A] border border-white/10 rounded-3xl p-10 shadow-2xl overflow-hidden backdrop-blur-xl">
+              <div className="relative bg-[var(--card-bg)] border border-[var(--card-border)] rounded-3xl p-10 shadow-2xl overflow-hidden backdrop-blur-xl">
                 <div className="flex items-center justify-between mb-8">
                   <div className="text-[10px] font-black text-theme-muted uppercase tracking-[0.2em]">Network Happiness Matrix v2.0</div>
                   <div className="flex gap-1.5">
@@ -443,15 +443,22 @@ function Home() {
 
 function App() {
   const [isLoginOpen, setIsLoginOpen] = React.useState(false);
+  const [theme, setTheme] = React.useState(document.documentElement.getAttribute('data-theme') || '');
+
+  const toggleTheme = () => {
+    const newTheme = theme === 'enterprise' ? '' : 'enterprise';
+    setTheme(newTheme);
+    document.documentElement.setAttribute('data-theme', newTheme);
+  };
 
   return (
     <div className="min-h-screen bg-[var(--color-bg)] text-theme selection:bg-emerald-500 selection:text-white font-sans overflow-x-hidden flex flex-col transition-colors duration-500">
 
       {/* Navigation */}
       <nav className="fixed w-full z-50 bg-[var(--color-bg)]/80 backdrop-blur-md border-b border-[var(--card-border)]">
-        <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 h-16 md:h-20 flex items-center justify-between">
           <Link to="/">
-            <Logo className="h-14 md:h-16" textColor="text-theme" theme={document.documentElement.getAttribute('data-theme')} />
+            <Logo className="h-10 md:h-14" textColor="text-theme" theme={theme} />
           </Link>
           <div className="hidden md:flex items-center gap-8 text-sm font-medium text-theme-muted">
             <a href="#brands" onClick={(e) => { e.preventDefault(); document.getElementById('brands').scrollIntoView({ behavior: 'smooth' }); }} className="hover:text-theme transition-colors">For Brands</a>
@@ -459,30 +466,27 @@ function App() {
             <a href="#partners" onClick={(e) => { e.preventDefault(); document.getElementById('partners').scrollIntoView({ behavior: 'smooth' }); }} className="hover:text-theme transition-colors">For Partners</a>
             <Link to="/resources" className="hover:text-theme transition-colors">Resources</Link>
             <button
-              onClick={() => {
-                const current = document.documentElement.getAttribute('data-theme');
-                document.documentElement.setAttribute('data-theme', current === 'enterprise' ? '' : 'enterprise');
-              }}
-              className="px-4 py-1.5 rounded-full border border-[var(--card-border)] text-xs hover:bg-[var(--card-bg)] transition-all"
+              onClick={toggleTheme}
+              className="px-4 py-1.5 rounded-full border border-[var(--card-border)] text-xs hover:bg-[var(--card-bg)] transition-all font-bold tracking-tight"
             >
-              Toggle V2.0
+              {theme === 'enterprise' ? 'Switch to V1.0 (Influencer)' : 'Switch to V2.0 (Enterprise)'}
             </button>
           </div>
           <div className="relative">
             <button
               onClick={() => setIsLoginOpen(!isLoginOpen)}
               onBlur={() => setTimeout(() => setIsLoginOpen(false), 200)}
-              className="px-6 py-2.5 bg-[var(--card-bg)] hover:brightness-110 border border-[var(--card-border)] text-theme rounded-full text-sm font-semibold flex items-center gap-2 transition-all shadow-sm"
+              className="px-4 md:px-6 py-2 md:py-2.5 bg-[var(--card-bg)] hover:brightness-110 border border-[var(--card-border)] text-theme rounded-full text-xs md:text-sm font-semibold flex items-center gap-1 md:gap-2 transition-all shadow-sm"
             >
               Log In
-              <svg className={`w-4 h-4 transition-transform ${isLoginOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className={`w-3 h-3 md:w-4 md:h-4 transition-transform ${isLoginOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
               </svg>
             </button>
 
             {isLoginOpen && (
               <div className="absolute right-0 mt-2 w-64 bg-[var(--card-bg)] border border-[var(--card-border)] rounded-2xl shadow-2xl py-2 z-50 animate-fade-in-up">
-                <div className="px-4 py-2 text-xs font-black text-theme-muted uppercase tracking-wider border-b border-[var(--card-border)] mb-2">
+                <div className="px-4 py-2 text-xs font-black text-theme-muted uppercase tracking-wider mb-2">
                   Select Your Portal
                 </div>
                 <button
@@ -501,7 +505,7 @@ function App() {
                 </button>
                 <button
                   onClick={() => openPortal('partner')}
-                  className="w-full text-left px-4 py-3 hover:bg-[var(--color-text)] hover:bg-opacity-5 text-sm font-bold transition-colors flex flex-col items-start border-t border-[var(--card-border)] mt-2 pt-3"
+                  className="w-full text-left px-4 py-3 hover:bg-[var(--color-text)] hover:bg-opacity-5 text-sm font-bold transition-colors flex flex-col items-start"
                 >
                   <span className="text-theme">Partners & Creators</span>
                   <span className="text-xs text-theme-muted font-medium mt-0.5">Track your commissions</span>
@@ -523,16 +527,16 @@ function App() {
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-white/5 py-12 text-center text-theme-muted text-sm mt-12 bg-black/20">
+      <footer className="border-t border-[var(--card-border)] py-12 text-center text-theme-muted text-sm mt-12 bg-[var(--card-bg)]/50 backdrop-blur-sm">
         <div className="flex justify-center mb-6 opacity-75 grayscale hover:grayscale-0 hover:opacity-100 transition-all">
           <Link to="/">
-            <Logo className="h-10" showText={false} />
+            <Logo className="h-10" showText={false} theme={theme} />
           </Link>
         </div>
-        <p className="mb-4">© 2026 Mojipass® Ecosystem. The Quad-Winner Marketplace.</p>
+        <p className="mb-4 text-theme-muted">© 2026 Mojipass® Ecosystem. The Quad-Winner Marketplace.</p>
         <div className="flex justify-center gap-6">
-          <Link to="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link>
-          <Link to="/terms" className="hover:text-white transition-colors">Terms of Service</Link>
+          <Link to="/privacy" className="text-theme-muted hover:text-theme transition-colors">Privacy Policy</Link>
+          <Link to="/terms" className="text-theme-muted hover:text-theme transition-colors">Terms of Service</Link>
         </div>
       </footer>
 

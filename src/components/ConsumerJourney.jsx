@@ -1,18 +1,18 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { 
-  Users, 
-  ExternalLink, 
-  ShoppingBag, 
-  Gift, 
-  Search, 
+import {
+  Users,
+  ExternalLink,
+  ShoppingBag,
+  Gift,
+  Search,
   Sparkles,
   Zap
 } from 'lucide-react';
 
 const JourneyStep = ({ icon: Icon, title, description, delay, colorClass }) => {
   return (
-    <motion.div 
+    <motion.div
       initial={{ opacity: 0, scale: 0.95 }}
       whileInView={{ opacity: 1, scale: 1 }}
       whileHover={{ y: -8, transition: { duration: 0.2 } }}
@@ -22,7 +22,7 @@ const JourneyStep = ({ icon: Icon, title, description, delay, colorClass }) => {
     >
       <div className={`w-16 h-16 bg-${colorClass}/10 rounded-2xl flex items-center justify-center mb-6 border border-${colorClass}/20 group-hover:bg-${colorClass}/20 transition-all relative z-10`}>
         <Icon className={`w-8 h-8 text-${colorClass}`} />
-        <motion.div 
+        <motion.div
           animate={{ scale: [1, 1.2, 1], opacity: [0, 0.5, 0] }}
           transition={{ duration: 2, repeat: Infinity }}
           className={`absolute inset-0 bg-${colorClass}/30 rounded-2xl blur-xl`}
@@ -30,7 +30,7 @@ const JourneyStep = ({ icon: Icon, title, description, delay, colorClass }) => {
       </div>
       <h4 className="text-xl font-bold text-theme mb-3 tracking-tight z-10">{title}</h4>
       <p className="text-theme-muted text-sm leading-relaxed z-10">{description}</p>
-      
+
       {/* Decorative inner glow */}
       <div className={`absolute -bottom-10 -right-10 w-32 h-32 bg-${colorClass}/5 blur-3xl rounded-full group-hover:bg-${colorClass}/10 transition-all`}></div>
     </motion.div>
@@ -40,7 +40,7 @@ const JourneyStep = ({ icon: Icon, title, description, delay, colorClass }) => {
 const FlowLine = ({ colorClass }) => (
   <div className="absolute top-[32px] left-8 right-8 h-[2px] hidden lg:block -z-10">
     <div className={`w-full h-full bg-gradient-to-r from-transparent via-${colorClass}/20 to-transparent`}></div>
-    <motion.div 
+    <motion.div
       initial={{ left: "-10%" }}
       animate={{ left: "110%" }}
       transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
@@ -58,7 +58,7 @@ export default function ConsumerJourney() {
 
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-24">
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -79,29 +79,29 @@ export default function ConsumerJourney() {
           {/* Path 1: Influencer Driven */}
           <div className="relative">
             <div className="flex items-center gap-4 mb-12">
-               <div className="w-12 h-12 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center font-bold text-emerald-400 shadow-[0_0_15px_rgba(16,185,129,0.1)]">
-                 01
-               </div>
-               <h3 className="text-2xl font-bold text-theme tracking-tight">The Creator-Powered Bridge</h3>
+              <div className="w-12 h-12 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center font-bold text-emerald-400 shadow-[0_0_15px_rgba(16,185,129,0.1)]">
+                01
+              </div>
+              <h3 className="text-2xl font-bold text-theme tracking-tight">The Creator-Powered Bridge</h3>
             </div>
-            
+
             <div className="relative grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
               <FlowLine colorClass="emerald-400" />
-              <JourneyStep 
+              <JourneyStep
                 icon={Users}
                 title="Discovery"
                 description="A shopper engages with a creator's unique 'Smart Pass' link on social media."
                 delay={0.1}
                 colorClass="emerald-400"
               />
-              <JourneyStep 
+              <JourneyStep
                 icon={ShoppingBag}
                 title="Seamless Checkout"
                 description="They proceed to purchase on the Shopify store—exactly as they normally would."
                 delay={0.3}
                 colorClass="emerald-400"
               />
-              <JourneyStep 
+              <JourneyStep
                 icon={Gift}
                 title="Gift Unlocked"
                 description="The 'Pass' reveals a premium sponsored reward, driving delight and retention."
@@ -114,29 +114,29 @@ export default function ConsumerJourney() {
           {/* Path 2: Merchant Native */}
           <div className="relative">
             <div className="flex items-center gap-4 mb-12">
-               <div className="w-12 h-12 rounded-full bg-blue-500/10 border border-blue-500/20 flex items-center justify-center font-bold text-blue-400 shadow-[0_0_15px_rgba(59,130,246,0.1)]">
-                 02
-               </div>
-               <h3 className="text-2xl font-bold text-theme tracking-tight">Merchant Native Activation</h3>
+              <div className="w-12 h-12 rounded-full bg-blue-500/10 border border-blue-500/20 flex items-center justify-center font-bold text-blue-400 shadow-[0_0_15px_rgba(59,130,246,0.1)]">
+                02
+              </div>
+              <h3 className="text-2xl font-bold text-theme tracking-tight">Merchant Native Activation</h3>
             </div>
-            
+
             <div className="relative grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
               <FlowLine colorClass="blue-400" />
-              <JourneyStep 
+              <JourneyStep
                 icon={Search}
                 title="Organic Visit"
                 description="Consumer arrives at the store directly via search or brand loyalty."
                 delay={0.2}
                 colorClass="blue-400"
               />
-              <JourneyStep 
+              <JourneyStep
                 icon={Sparkles}
                 title="AI Recognition"
                 description="Mojipass® matches the transaction with high-value sponsorship opportunities."
                 delay={0.4}
                 colorClass="blue-400"
               />
-              <JourneyStep 
+              <JourneyStep
                 icon={ExternalLink}
                 title="Conversion Boost"
                 description="The surprise reward increases AOV and ensures the shopper returns for more."
@@ -148,7 +148,7 @@ export default function ConsumerJourney() {
         </div>
 
         {/* Closing CTA */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ delay: 1 }}
@@ -157,9 +157,9 @@ export default function ConsumerJourney() {
           <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/5 via-transparent to-blue-500/5"></div>
           <h3 className="text-2xl md:text-4xl font-bold text-theme mb-6 relative z-10 font-display">Ready to see the dashboard in action?</h3>
           <p className="text-theme-muted mb-10 relative z-10 max-w-2xl mx-auto">Experience the live data, attribution ledger, and partner marketplace with our guided demo.</p>
-          <button 
+          <button
             onClick={() => window.location.href = 'https://app.mojipass.com'}
-            className="px-10 py-4 bg-white text-black font-black rounded-full hover:bg-emerald-400 hover:text-white transition-all transform hover:scale-110 active:scale-95 relative z-10 uppercase tracking-tighter text-lg shadow-2xl"
+            className="px-10 py-4 bg-[var(--color-text)] text-[var(--color-bg)] font-black rounded-full hover:bg-emerald-400 hover:text-white transition-all transform hover:scale-110 active:scale-95 relative z-10 uppercase tracking-tighter text-lg shadow-2xl"
           >
             Access Live Demo
           </button>

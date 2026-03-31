@@ -26,8 +26,8 @@ const AiAssistant = () => {
 
     try {
       const isDev = window.location.hostname === 'localhost';
-      const apiUrl = isDev 
-        ? 'http://localhost:4000/api/v1/ai/ask' 
+      const apiUrl = isDev
+        ? 'http://localhost:4000/api/v1/ai/ask'
         : 'https://mojipass-core-api-production.up.railway.app/api/v1/ai/ask';
 
       const response = await fetch(apiUrl, {
@@ -50,7 +50,7 @@ const AiAssistant = () => {
   };
 
   return (
-    <div className="fixed bottom-8 right-8 z-[100] font-sans">
+    <div className="fixed bottom-4 right-4 md:bottom-8 md:right-8 z-[100] font-sans">
       {/* Floating Button */}
       {!isOpen && (
         <button
@@ -77,7 +77,7 @@ const AiAssistant = () => {
                 <span className="text-[10px] text-emerald-400 font-bold uppercase tracking-widest mt-1 block">Online Assistant</span>
               </div>
             </div>
-            <button 
+            <button
               onClick={() => setIsOpen(false)}
               className="p-2 hover:bg-white/5 rounded-full transition-colors"
             >
@@ -86,20 +86,19 @@ const AiAssistant = () => {
           </div>
 
           {/* Messages */}
-          <div 
+          <div
             ref={scrollRef}
             className="flex-1 overflow-y-auto p-6 space-y-4 scroll-smooth"
           >
             {messages.map((msg, i) => (
-              <div 
-                key={i} 
+              <div
+                key={i}
                 className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'} animate-fade-in`}
               >
-                <div className={`max-w-[85%] p-4 rounded-2xl text-sm leading-relaxed ${
-                  msg.role === 'user' 
-                    ? 'bg-emerald-500 text-white rounded-tr-none' 
+                <div className={`max-w-[85%] p-4 rounded-2xl text-sm leading-relaxed ${msg.role === 'user'
+                    ? 'bg-emerald-500 text-white rounded-tr-none'
                     : 'bg-white/5 text-slate-300 border border-white/5 rounded-tl-none ring-1 ring-white/5 shadow-inner'
-                }`}>
+                  }`}>
                   {msg.content}
                 </div>
               </div>
@@ -126,7 +125,7 @@ const AiAssistant = () => {
                 placeholder="Ask about CPAs, Merchants..."
                 className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-6 pr-14 text-white placeholder:text-slate-500 focus:outline-none focus:border-emerald-500/50 transition-all text-sm shadow-inner"
               />
-              <button 
+              <button
                 onClick={handleSend}
                 disabled={isLoading}
                 className="absolute right-3 top-1/2 -translate-y-1/2 p-2.5 bg-emerald-500 hover:bg-emerald-400 text-white rounded-xl transition-all disabled:opacity-50"
