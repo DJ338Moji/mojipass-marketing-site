@@ -485,27 +485,27 @@ function App() {
             </button>
 
             {isLoginOpen && (
-              <div className="absolute right-0 mt-2 w-64 bg-[var(--card-bg)] border border-[var(--card-border)] rounded-2xl shadow-2xl py-2 z-50 animate-fade-in-up">
-                <div className="px-4 py-2 text-xs font-black text-theme-muted uppercase tracking-wider mb-2">
-                  Select Your Portal
+              <div className="absolute right-0 mt-2 w-64 bg-[var(--card-bg)] border border-[var(--card-border)] rounded-2xl shadow-2xl py-2 z-50 animate-fade-in-up divide-none">
+                <div className="px-4 py-2 text-xs font-black text-theme-muted uppercase tracking-wider mb-2 border-none">
+                  Choose Your Portal
                 </div>
                 <button
                   onClick={() => openPortal('brand')}
-                  className="w-full text-left px-4 py-3 hover:bg-[var(--color-text)] hover:bg-opacity-5 text-sm font-bold transition-colors flex flex-col items-start"
+                  className="w-full text-left px-4 py-3 hover:bg-[var(--color-text)] hover:bg-opacity-5 text-sm font-bold transition-colors flex flex-col items-start border-none"
                 >
                   <span className="text-theme">Brands</span>
                   <span className="text-xs text-theme-muted font-medium mt-0.5">Manage your campaigns</span>
                 </button>
                 <button
                   onClick={() => openPortal('app')}
-                  className="w-full text-left px-4 py-3 hover:bg-[var(--color-text)] hover:bg-opacity-5 text-sm font-bold transition-colors flex flex-col items-start"
+                  className="w-full text-left px-4 py-3 hover:bg-[var(--color-text)] hover:bg-opacity-5 text-sm font-bold transition-colors flex flex-col items-start border-none"
                 >
                   <span className="text-theme">Merchants</span>
                   <span className="text-xs text-theme-muted font-medium mt-0.5">Access Shopify dashboard</span>
                 </button>
                 <button
                   onClick={() => openPortal('partner')}
-                  className="w-full text-left px-4 py-3 hover:bg-[var(--color-text)] hover:bg-opacity-5 text-sm font-bold transition-colors flex flex-col items-start"
+                  className="w-full text-left px-4 py-3 hover:bg-[var(--color-text)] hover:bg-opacity-5 text-sm font-bold transition-colors flex flex-col items-start border-none"
                 >
                   <span className="text-theme">Partners & Creators</span>
                   <span className="text-xs text-theme-muted font-medium mt-0.5">Track your commissions</span>
