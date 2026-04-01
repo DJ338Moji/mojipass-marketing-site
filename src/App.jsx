@@ -503,6 +503,17 @@ function App() {
                   <span className="text-theme">Merchants</span>
                   <span className="text-xs text-theme-muted font-medium mt-0.5">Access Shopify dashboard</span>
                 </button>
+                <div className="mx-4 my-1 border-t border-[var(--card-border)] opacity-30 border-none"></div>
+                <button
+                  onClick={() => window.open('https://admin.shopify.com/store/mojiapp-demo-store/apps/mojipass-1/app', '_blank')}
+                  className="w-full text-left px-4 py-3 bg-[var(--color-brand)] bg-opacity-5 hover:bg-opacity-10 text-sm font-bold transition-colors flex flex-col items-start border-none group"
+                >
+                  <span className="text-[var(--color-brand)] flex items-center gap-2">
+                    🚀 Mojiapp Demo Store
+                  </span>
+                  <span className="text-[10px] text-[var(--color-brand)] opacity-70 font-black uppercase tracking-tighter mt-0.5">Developer Quick-Access</span>
+                </button>
+                <div className="mx-4 my-1 border-t border-[var(--card-border)] opacity-30 border-none"></div>
                 <button
                   onClick={() => openPortal('partner')}
                   className="w-full text-left px-4 py-3 hover:bg-[var(--color-text)] hover:bg-opacity-5 text-sm font-bold transition-colors flex flex-col items-start border-none"
