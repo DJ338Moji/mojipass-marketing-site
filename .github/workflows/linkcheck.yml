@@ -1,0 +1,176 @@
+name: LinkCheck (www.mojipass.com)
+
+on:
+  pull_request:
+  schedule:
+    - cron: "17 10 * * *" # daily 10:17 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  linkcheck:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run lychee (JSON)
+        id: lychee_json
+        continue-on-error: true
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: >
+            --base https://www.mojipass.com
+            --verbose
+            --no-progress
+            --accept 200,201,202,203,204,206,301,302,303,307,308,429
+            --exclude-mail
+            --format json
+            --output linkcheck.json
+            https://www.mojipass.com
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Run lychee (CSV)
+        id: lychee_csv
+        continue-on-error: true
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: >
+            --base https://www.mojipass.com
+            --verbose
+            --no-progress
+            --accept 200,201,202,203,204,206,301,302,303,307,308,429
+            --exclude-mail
+            --format csv
+            --output linkcheck.csv
+            https://www.mojipass.com
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: linkcheck-reports
+          path: |
+            linkcheck.json
+            linkcheck.csv
+
+      - name: Create/update GitHub Issues for failures
+        if: always()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require("fs");
+            const path = require("path");
+
+            const jsonPath = path.join(process.env.GITHUB_WORKSPACE, "linkcheck.json");
+            if (!fs.existsSync(jsonPath)) {
+              core.warning("linkcheck.json not found; skipping issue sync");
+              return;
+            }
+
+            const raw = fs.readFileSync(jsonPath, "utf8");
+            let data;
+            try {
+              data = JSON.parse(raw);
+            } catch (e) {
+              core.warning("Failed to parse linkcheck.json; skipping issue sync");
+              return;
+            }
+
+            // lychee JSON shape includes `fail_map` with keys like "https://..." => [{url, status, ...}]
+            const failMap = data.fail_map || {};
+            const failures = [];
+            for (const [source, arr] of Object.entries(failMap)) {
+              for (const f of (arr || [])) {
+                failures.push({
+                  source,
+                  url: f.url || f.link || f.href || "unknown",
+                  status: f.status || f.code || "unknown",
+                  message: f.message || f.error || f.reason || "",
+                });
+              }
+            }
+
+            if (failures.length === 0) {
+              core.info("No link failures found; nothing to sync");
+              return;
+            }
+
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const label = "linkcheck";
+
+            // Ensure label exists
+            try {
+              await github.rest.issues.getLabel({ owner, repo, name: label });
+            } catch (e) {
+              await github.rest.issues.createLabel({
+                owner,
+                repo,
+                name: label,
+                color: "d73a4a",
+                description: "Automated broken link reports",
+              });
+            }
+
+            // Load existing open issues with our label (paginate)
+            const existing = [];
+            for await (const page of github.paginate.iterator(github.rest.issues.listForRepo, {
+              owner,
+              repo,
+              state: "open",
+              labels: label,
+              per_page: 100,
+            })) {
+              existing.push(...page.data);
+            }
+            const existingByTitle = new Map(existing.map(i => [i.title, i]));
+
+            const now = new Date().toISOString();
+            const maxIssues = 50; // prevent runaway spam if something goes very wrong
+
+            for (const f of failures.slice(0, maxIssues)) {
+              const title = `[LinkCheck] ${f.status} ${f.url}`.slice(0, 255);
+              const body = [
+                `**URL**: ${f.url}`,
+                `**Status**: ${f.status}`,
+                f.message ? `**Message**: ${f.message}` : null,
+                `**Found in**: ${f.source}`,
+                `**Last seen**: ${now}`,
+                "",
+                "_Automated report from LinkCheck workflow._",
+              ].filter(Boolean).join("\n");
+
+              const hit = existingByTitle.get(title);
+              if (!hit) {
+                await github.rest.issues.create({
+                  owner,
+                  repo,
+                  title,
+                  body,
+                  labels: [label],
+                });
+              } else {
+                await github.rest.issues.createComment({
+                  owner,
+                  repo,
+                  issue_number: hit.number,
+                  body,
+                });
+              }
+            }
+
+      - name: Fail job if linkcheck failed
+        if: always()
+        run: |
+          if [ "${{ steps.lychee_json.outcome }}" != "success" ] || [ "${{ steps.lychee_csv.outcome }}" != "success" ]; then
+            echo "LinkCheck failed (see reports/artifacts)."
+            exit 1
+          fi
+
