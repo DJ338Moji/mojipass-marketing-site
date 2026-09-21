@@ -65,7 +65,10 @@ const AiAssistant = () => {
 
       {/* Chat Window */}
       {isOpen && (
-        <div className="w-[380px] h-[550px] bg-[#1E293B]/95 backdrop-blur-2xl border border-white/10 rounded-3xl shadow-2xl flex flex-col overflow-hidden animate-fade-in-up">
+        <div
+          className="w-[380px] h-[550px] bg-[#1E293B]/95 backdrop-blur-2xl border border-white/10 rounded-3xl shadow-2xl flex flex-col overflow-hidden animate-fade-in-up"
+          style={{ WebkitTransform: 'translateZ(0)', transform: 'translateZ(0)' }}
+        >
           {/* Header */}
           <div className="p-6 bg-gradient-to-r from-emerald-500/10 to-transparent border-b border-white/5 flex items-center justify-between">
             <div className="flex items-center gap-3">

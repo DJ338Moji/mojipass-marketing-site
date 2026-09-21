@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { lazy, Suspense } from 'react';
 import { motion } from 'framer-motion';
 import { GraduationCap, BookOpen, MessageSquare } from 'lucide-react';
-import TutorialGrid from '../components/TutorialGrid';
+
+const TutorialGrid = lazy(() => import('../components/TutorialGrid'));
 
 export default function Resources() {
   return (
@@ -28,14 +29,16 @@ export default function Resources() {
           </p>
         </div>
 
-        <TutorialGrid />
+        <Suspense fallback={null}>
+          <TutorialGrid />
+        </Suspense>
 
         {/* Support Section */}
         <div className="mt-32 grid grid-cols-1 md:grid-cols-2 gap-8">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, amount: 0.12 }}
             className="p-8 rounded-3xl bg-white/5 border border-white/10 flex flex-col items-center text-center gap-6"
           >
             <div className="w-16 h-16 bg-blue-500/10 rounded-2xl flex items-center justify-center border border-blue-500/20">
@@ -44,16 +47,21 @@ export default function Resources() {
             <div>
               <h3 className="text-2xl font-bold text-white mb-3">API Documentation</h3>
               <p className="text-slate-400 mb-6 font-medium">Build custom integrations with the Mojipass® headless engine.</p>
-              <button className="text-emerald-400 font-bold hover:text-emerald-300 transition-colors uppercase text-sm tracking-widest px-6 py-3 border border-emerald-500/20 rounded-xl hover:bg-emerald-500/10">
+              <a 
+                href="https://docs.mojipass.com" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="inline-block text-emerald-400 font-bold hover:text-emerald-300 transition-colors uppercase text-sm tracking-widest px-6 py-3 border border-emerald-500/20 rounded-xl hover:bg-emerald-500/10"
+              >
                 Read Docs
-              </button>
+              </a>
             </div>
           </motion.div>
 
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, amount: 0.12 }}
             className="p-8 rounded-3xl bg-white/5 border border-white/10 flex flex-col items-center text-center gap-6"
           >
             <div className="w-16 h-16 bg-emerald-500/10 rounded-2xl flex items-center justify-center border border-emerald-500/20">
@@ -62,9 +70,14 @@ export default function Resources() {
             <div>
               <h3 className="text-2xl font-bold text-white mb-3">Community Hub</h3>
               <p className="text-slate-400 mb-6 font-medium">Join 500+ partners and brands sharing success blueprints.</p>
-              <button className="text-emerald-400 font-bold hover:text-emerald-300 transition-colors uppercase text-sm tracking-widest px-6 py-3 border border-emerald-500/20 rounded-xl hover:bg-emerald-500/10">
+              <a 
+                href="https://discord.gg/mojipass" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="inline-block text-emerald-400 font-bold hover:text-emerald-300 transition-colors uppercase text-sm tracking-widest px-6 py-3 border border-emerald-500/20 rounded-xl hover:bg-emerald-500/10"
+              >
                 Join Discord
-              </button>
+              </a>
             </div>
           </motion.div>
         </div>

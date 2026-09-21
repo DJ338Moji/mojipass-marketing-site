@@ -19,6 +19,8 @@
   --card-bg: #1e293b;
   /* Slate 800 */
   --card-border: rgba(255, 255, 255, 0.1);
+  /* Alias used by some layouts (must follow --color-bg) */
+  --bg-color: var(--color-bg);
 }
 
 [data-theme='enterprise'] {
@@ -41,6 +43,7 @@
   /* White */
   --card-border: #e2e8f0;
   /* Slate 200 */
+  --bg-color: var(--color-bg);
 }
 
 @layer base {
@@ -59,5 +62,13 @@
 
   .text-theme-muted {
     color: var(--color-text-muted) !important;
+  }
+}
+
+/* Mobile: near-instant CSS animations/transitions (complements Framer Motion reducedMotion) */
+@media (max-width: 768px) {
+  * {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
   }
 }

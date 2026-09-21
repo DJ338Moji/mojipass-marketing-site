@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { lazy, Suspense } from 'react';
 import { Routes, Route, Link } from 'react-router-dom';
 import {
   BuildingStorefrontIcon,
@@ -14,9 +14,30 @@ import { ArrowTrendingUpIcon, ShieldCheckIcon, GlobeAltIcon } from '@heroicons/r
 import Logo from './components/Logo';
 import Privacy from './pages/Privacy';
 import Terms from './pages/Terms';
-import ConsumerJourney from './components/ConsumerJourney';
+import Support from './pages/Support';
 import Resources from './pages/Resources';
-import AiAssistant from './components/AiAssistant';
+import { useLocation, useNavigate } from 'react-router-dom';
+
+const AiAssistant = lazy(() => import('./components/AiAssistant'));
+const ConsumerJourney = lazy(() => import('./components/ConsumerJourney'));
+const MerchantVideoWalkthrough = lazy(() => import('./components/MerchantVideoWalkthrough'));
+
+function usePostMountAnalytics() {
+  React.useEffect(() => {
+    const script = document.createElement('script');
+    script.src = 'https://www.googletagmanager.com/gtag/js?id=G-1GZME3VSPB';
+    script.async = true;
+    document.head.appendChild(script);
+  }, []);
+}
+
+function ScrollToTop() {
+  const { pathname } = useLocation();
+  React.useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+  return null;
+}
 
 const openPortal = (subdomain) => {
   const isDev = window.location.hostname === 'localhost';
@@ -32,6 +53,19 @@ const openPortal = (subdomain) => {
 
 
 function Home() {
+  const [showMerchantVideo, setShowMerchantVideo] = React.useState(false);
+
+  React.useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('video') || params.get('walkthrough') || params.get('playground')) {
+      setShowMerchantVideo(true);
+    }
+
+    const handleOpenEvent = () => setShowMerchantVideo(true);
+    window.addEventListener('open-walkthrough', handleOpenEvent);
+    return () => window.removeEventListener('open-walkthrough', handleOpenEvent);
+  }, []);
+
   return (
     <>
       {/* Hero Section */}
@@ -40,14 +74,24 @@ function Home() {
         <div className="absolute top-20 left-1/2 -translate-x-1/2 w-[800px] h-[600px] bg-gradient-to-br from-[var(--color-brand)]/20 via-[var(--color-accent)]/10 to-transparent blur-[var(--glow-blur)] rounded-full pointer-events-none -z-10"></div>
 
         <div className="max-w-5xl mx-auto text-center space-y-8">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-sm shadow-xl text-sm font-medium text-emerald-400 mb-4 animate-fade-in-up">
+          <div
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-sm shadow-xl text-sm font-medium text-emerald-400 mb-4 animate-fade-in-up"
+            style={{ WebkitTransform: 'translateZ(0)', transform: 'translateZ(0)' }}
+          >
             <SparklesIcon className="w-4 h-4" />
             <span>The Shopify Integration is Now Live</span>
           </div>
 
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter leading-[1.0] mb-8 drop-shadow-2xl">
             <span className="block text-theme mb-2">THE WORLD'S FIRST</span>
-            <span className="block bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 via-azure-400 to-blue-500 pb-2">
+            <span
+              className="block bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 via-cyan-400 to-blue-500 pb-2"
+              style={{
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                backgroundClip: 'text',
+              }}
+            >
               FRICTIONLESS
             </span>
             <span className="block text-theme">CHECKOUT NETWORK.</span>
@@ -60,9 +104,16 @@ function Home() {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
             <button
               onClick={() => document.getElementById('tri-sided').scrollIntoView({ behavior: 'smooth' })}
-              className="px-8 py-4 bg-gradient-to-r from-[var(--color-brand)] to-[var(--color-accent)] hover:brightness-110 text-theme rounded-full font-bold text-lg shadow-[0_0_40px_-10px_var(--color-brand)] transition-all transform hover:scale-105 flex items-center gap-2"
+              className="px-8 py-4 bg-gradient-to-r from-[var(--color-brand)] to-[var(--color-accent)] hover:brightness-110 text-theme rounded-full font-bold text-lg shadow-[0_0_40px_-10px_var(--color-brand)] transition-all transform hover:scale-105 flex items-center gap-2 cursor-pointer"
             >
               Choose Your Portal <ArrowRightIcon className="w-5 h-5" />
+            </button>
+            <button
+              type="button"
+              onClick={() => setShowMerchantVideo(true)}
+              className="px-8 py-4 bg-white/5 hover:bg-white/10 border border-white/10 text-theme rounded-full font-bold text-lg transition-all flex items-center gap-2 text-emerald-400 cursor-pointer shadow-lg hover:border-emerald-500/30"
+            >
+              <span className="text-xl">▶</span> Watch 90s Walkthrough
             </button>
           </div>
 
@@ -74,7 +125,10 @@ function Home() {
       </section>
 
       {/* Social Proof Bar */}
-      <div className="border-y border-white/5 bg-white/5 backdrop-blur-sm py-8 overflow-hidden">
+      <div
+        className="border-y border-white/5 bg-white/5 backdrop-blur-sm py-8 overflow-hidden"
+        style={{ WebkitTransform: 'translateZ(0)', transform: 'translateZ(0)' }}
+      >
         <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-8 text-theme-muted font-medium text-sm">
           <div className="flex items-center gap-3">
             <ShieldCheckIcon className="w-6 h-6 text-theme-muted" />
@@ -90,7 +144,9 @@ function Home() {
         </div>
       </div>
 
-      <ConsumerJourney />
+      <Suspense fallback={null}>
+        <ConsumerJourney onOpenWalkthrough={() => setShowMerchantVideo(true)} />
+      </Suspense>
 
       {/* Bento Box: Tri-Sided Marketplace */}
       <section id="tri-sided" className="py-24 px-6 relative z-10">
@@ -106,7 +162,11 @@ function Home() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
 
             {/* Card 1: Brands */}
-            <div id="brands" className="group relative bg-[var(--card-bg)] border border-[var(--card-border)] p-8 rounded-3xl hover:border-[var(--color-brand)]/30 transition-all overflow-hidden backdrop-blur-sm">
+            <div
+              id="brands"
+              className="group relative bg-[var(--card-bg)] border border-[var(--card-border)] p-8 rounded-3xl hover:border-[var(--color-brand)]/30 transition-all overflow-hidden backdrop-blur-sm"
+              style={{ WebkitTransform: 'translateZ(0)', transform: 'translateZ(0)' }}
+            >
               <div className="absolute top-0 right-0 w-64 h-64 bg-[var(--color-brand)]/5 blur-[var(--glow-blur)] rounded-full group-hover:bg-[var(--color-brand)]/10 transition-all"></div>
 
               <div className="w-14 h-14 bg-blue-500/10 rounded-2xl flex items-center justify-center mb-6 border border-blue-500/20">
@@ -131,7 +191,11 @@ function Home() {
             </div>
 
             {/* Card 2: Merchants */}
-            <div id="merchants" className="group relative bg-[var(--card-bg)] border border-[var(--card-border)] p-8 rounded-3xl hover:border-[var(--color-brand)]/30 transition-all overflow-hidden transform md:-translate-y-4 shadow-2xl backdrop-blur-sm">
+            <div
+              id="merchants"
+              className="group relative bg-[var(--card-bg)] border border-[var(--card-border)] p-8 rounded-3xl hover:border-[var(--color-brand)]/30 transition-all overflow-hidden transform md:-translate-y-4 shadow-2xl backdrop-blur-sm"
+              style={{ WebkitTransform: 'translateZ(0)', transform: 'translateZ(0)' }}
+            >
               <div className="absolute top-0 right-0 w-64 h-64 bg-[var(--color-brand)]/5 blur-[var(--glow-blur)] rounded-full group-hover:bg-[var(--color-brand)]/10 transition-all"></div>
 
               <div className="w-14 h-14 bg-[var(--color-brand)]/10 rounded-2xl flex items-center justify-center mb-6 border border-[var(--color-brand)]/20">
@@ -153,10 +217,22 @@ function Home() {
               >
                 Install Shopify App <ArrowRightIcon className="w-4 h-4" />
               </button>
+
+              <button
+                type="button"
+                onClick={() => setShowMerchantVideo(true)}
+                className="w-full mt-3 py-3 rounded-xl bg-white/5 border border-white/10 text-theme font-semibold hover:bg-white/10 transition-all flex justify-center items-center gap-2 text-xs uppercase tracking-wider text-emerald-400"
+              >
+                <span>▶ Watch 90s Video Walkthrough</span>
+              </button>
             </div>
 
             {/* Card 3: Partners */}
-            <div id="partners" className="group relative bg-[var(--card-bg)] border border-[var(--card-border)] p-8 rounded-3xl hover:border-[var(--color-brand)]/30 transition-all overflow-hidden backdrop-blur-sm">
+            <div
+              id="partners"
+              className="group relative bg-[var(--card-bg)] border border-[var(--card-border)] p-8 rounded-3xl hover:border-[var(--color-brand)]/30 transition-all overflow-hidden backdrop-blur-sm"
+              style={{ WebkitTransform: 'translateZ(0)', transform: 'translateZ(0)' }}
+            >
               <div className="absolute top-0 right-0 w-64 h-64 bg-[var(--color-brand)]/5 blur-[var(--glow-blur)] rounded-full group-hover:bg-[var(--color-brand)]/10 transition-all"></div>
 
               <div className="w-14 h-14 bg-purple-500/10 rounded-2xl flex items-center justify-center mb-6 border border-purple-500/20">
@@ -183,6 +259,7 @@ function Home() {
             {/* Card 4: Consumers/Shoppers */}
             <div
               className="group relative bg-[var(--card-bg)] border border-[var(--card-border)] p-8 rounded-3xl hover:border-emerald-500/40 transition-all overflow-hidden backdrop-blur-sm md:col-span-3"
+              style={{ WebkitTransform: 'translateZ(0)', transform: 'translateZ(0)' }}
             >
               <div className="absolute -right-20 -bottom-20 w-96 h-96 bg-emerald-500/10 blur-[100px] rounded-full group-hover:bg-emerald-500/20 transition-all"></div>
 
@@ -195,16 +272,19 @@ function Home() {
                   <p className="text-lg mb-6 leading-relaxed" style={{ color: 'var(--color-text-muted)' }}>
                     The ultimate winner. Shoppers unlock premium, full-sized trials and exclusive gifts from top-tier brands—simply for making a purchase they already planned. No hoops, no friction, just pure delight at checkout.
                   </p>
-                  <div className="flex items-center gap-6 text-emerald-400 font-bold">
-                    <div className="flex items-center gap-2 px-4 py-2 flex-wrap bg-emerald-500/10 rounded-full border border-emerald-500/20 tracking-tight text-sm">
-                      <BoltIcon className="w-4 h-4" /> Zero Extra Cost
+                  <div className="flex items-center gap-6 text-slate-400 font-bold">
+                    <div className="flex items-center gap-2 tracking-tight text-sm">
+                      <BoltIcon className="w-4 h-4 text-emerald-500/60" /> Zero Extra Cost
                     </div>
-                    <div className="flex items-center gap-2 px-4 py-2 flex-wrap bg-emerald-500/10 rounded-full border border-emerald-500/20 tracking-tight text-sm">
-                      <GiftIcon className="w-4 h-4" /> Full-Sized Rewards
+                    <div className="flex items-center gap-2 tracking-tight text-sm">
+                      <GiftIcon className="w-4 h-4 text-emerald-500/60" /> Full-Sized Rewards
                     </div>
                   </div>
                 </div>
-                <div className="relative w-full md:w-80 h-48 bg-[var(--bg-color)] border border-[var(--card-border)] rounded-2xl backdrop-blur-md flex items-center justify-center overflow-hidden group-hover:shadow-[0_0_20px_rgba(16,185,129,0.2)] transition-all relative z-10">
+                <div
+                  className="relative w-full md:w-80 h-48 bg-[var(--color-bg)] border border-[var(--card-border)] rounded-2xl backdrop-blur-md flex items-center justify-center overflow-hidden group-hover:shadow-[0_0_20px_rgba(16,185,129,0.2)] transition-all relative z-10"
+                  style={{ WebkitTransform: 'translateZ(0)', transform: 'translateZ(0)' }}
+                >
                   <div className="absolute inset-0 transition-opacity bg-gradient-to-br from-emerald-500/5 to-transparent opacity-50"></div>
                   <div className="text-center relative z-20">
                     <div className="text-xs uppercase tracking-widest mb-2 font-bold" style={{ color: 'var(--color-text-muted)' }}>Mojipass® Revealed</div>
@@ -220,7 +300,7 @@ function Home() {
       </section>
 
       {/* How it Works / Step-by-Step Playbook */}
-      <section className="py-24 px-6 bg-[var(--bg-color)] border-t border-white/5 relative z-10">
+      <section className="py-24 px-6 bg-[var(--color-bg)] border-t border-white/5 relative z-10">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-5xl font-black mb-4">The Frictionless Playbook.</h2>
@@ -379,8 +459,8 @@ function Home() {
                 </div>
                 <div className="space-y-3">
                   <div className="flex items-center gap-3 text-theme font-bold">
-                    <div className="w-8 h-8 bg-azure-500/10 rounded-lg flex items-center justify-center border border-azure-500/20 shadow-lg">
-                      <SparklesIcon className="w-4 h-4 text-azure-400" />
+                    <div className="w-8 h-8 bg-cyan-500/10 rounded-lg flex items-center justify-center border border-cyan-500/20 shadow-lg">
+                      <SparklesIcon className="w-4 h-4 text-cyan-400" />
                     </div>
                     Synergy Logic
                   </div>
@@ -407,8 +487,11 @@ function Home() {
               </div>
             </div>
             <div className="relative group">
-              <div className="absolute -inset-1 bg-gradient-to-r from-emerald-500 to-azure-500 rounded-3xl blur opacity-20 group-hover:opacity-30 transition duration-1000"></div>
-              <div className="relative bg-[var(--card-bg)] border border-[var(--card-border)] rounded-3xl p-10 shadow-2xl overflow-hidden backdrop-blur-xl">
+              <div className="absolute -inset-1 bg-gradient-to-r from-emerald-500 to-cyan-500 rounded-3xl blur opacity-20 group-hover:opacity-30 transition duration-1000"></div>
+              <div
+                className="relative bg-[var(--card-bg)] border border-[var(--card-border)] rounded-3xl p-10 shadow-2xl overflow-hidden backdrop-blur-xl"
+                style={{ WebkitTransform: 'translateZ(0)', transform: 'translateZ(0)' }}
+              >
                 <div className="flex items-center justify-between mb-8">
                   <div className="text-[10px] font-black text-theme-muted uppercase tracking-[0.2em]">Network Happiness Matrix v2.0</div>
                   <div className="flex gap-1.5">
@@ -437,11 +520,28 @@ function Home() {
           </div>
         </div>
       </section>
+      {/* Merchant Video Walkthrough Modal */}
+      {showMerchantVideo && (
+        <div
+          className="fixed inset-0 z-50 bg-black/85 backdrop-blur-lg flex items-center justify-center p-4 sm:p-6"
+          onClick={() => setShowMerchantVideo(false)}
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="w-full max-w-5xl"
+          >
+            <Suspense fallback={<div className="p-12 text-center text-white font-bold">Loading Video Walkthrough...</div>}>
+              <MerchantVideoWalkthrough onClose={() => setShowMerchantVideo(false)} />
+            </Suspense>
+          </div>
+        </div>
+      )}
     </>
   );
 }
 
 function App() {
+  usePostMountAnalytics();
   const [isLoginOpen, setIsLoginOpen] = React.useState(false);
   const [theme, setTheme] = React.useState(document.documentElement.getAttribute('data-theme') || '');
 
@@ -455,21 +555,63 @@ function App() {
     <div className="min-h-screen bg-[var(--color-bg)] text-theme selection:bg-emerald-500 selection:text-white font-sans overflow-x-hidden flex flex-col transition-colors duration-500">
 
       {/* Navigation */}
-      <nav className="fixed w-full z-50 bg-[var(--color-bg)]/80 backdrop-blur-md border-b border-[var(--card-border)]">
+      <nav
+        className="fixed w-full z-50 bg-[var(--color-bg)]/80 backdrop-blur-md border-b border-[var(--card-border)]"
+        style={{
+          WebkitTransform: 'translateZ(0)',
+          transform: 'translateZ(0)',
+          willChange: 'transform',
+        }}
+      >
         <div className="max-w-7xl mx-auto px-4 md:px-6 h-16 md:h-20 flex items-center justify-between">
-          <Link to="/">
-            <Logo className="h-10 md:h-14" textColor="text-theme" theme={theme} />
+          <Link to="/" onClick={() => { if (window.location.pathname === '/') window.scrollTo({ top: 0, behavior: 'smooth' }); }}>
+            <Logo className="h-8 md:h-12 lg:h-14" textColor="text-theme" theme={theme} />
           </Link>
-          <div className="hidden md:flex items-center gap-8 text-sm font-medium text-theme-muted">
-            <a href="#brands" onClick={(e) => { e.preventDefault(); document.getElementById('brands').scrollIntoView({ behavior: 'smooth' }); }} className="hover:text-theme transition-colors">For Brands</a>
-            <a href="#merchants" onClick={(e) => { e.preventDefault(); document.getElementById('merchants').scrollIntoView({ behavior: 'smooth' }); }} className="hover:text-theme transition-colors">For Merchants</a>
-            <a href="#partners" onClick={(e) => { e.preventDefault(); document.getElementById('partners').scrollIntoView({ behavior: 'smooth' }); }} className="hover:text-theme transition-colors">For Partners</a>
+          <div className="hidden md:flex items-center gap-6 lg:gap-8 text-sm font-medium text-theme-muted shrink-0">
+            <a href="#brands" onClick={(e) => {
+              e.preventDefault();
+              if (window.location.pathname !== '/') {
+                window.location.href = '/#brands';
+              } else {
+                document.getElementById('brands').scrollIntoView({ behavior: 'smooth' });
+              }
+            }} className="hover:text-theme transition-colors">For Brands</a>
+            <a href="#merchants" onClick={(e) => {
+              e.preventDefault();
+              if (window.location.pathname !== '/') {
+                window.location.href = '/#merchants';
+              } else {
+                document.getElementById('merchants').scrollIntoView({ behavior: 'smooth' });
+              }
+            }} className="hover:text-theme transition-colors">For Merchants</a>
+            <a href="#partners" onClick={(e) => {
+              e.preventDefault();
+              if (window.location.pathname !== '/') {
+                window.location.href = '/#partners';
+              } else {
+                document.getElementById('partners').scrollIntoView({ behavior: 'smooth' });
+              }
+            }} className="hover:text-theme transition-colors">For Partners</a>
             <Link to="/resources" className="hover:text-theme transition-colors">Resources</Link>
             <button
-              onClick={toggleTheme}
-              className="px-4 py-1.5 rounded-full border border-[var(--card-border)] text-xs hover:bg-[var(--card-bg)] transition-all font-bold tracking-tight"
+              type="button"
+              onClick={() => {
+                if (window.location.pathname !== '/') {
+                  window.location.href = '/walkthrough';
+                } else {
+                  const event = new CustomEvent('open-walkthrough');
+                  window.dispatchEvent(event);
+                }
+              }}
+              className="text-emerald-400 hover:text-emerald-300 transition-colors flex items-center gap-1.5 font-bold text-xs uppercase tracking-wider cursor-pointer"
             >
-              {theme === 'enterprise' ? 'Switch to V1.0 (Influencer)' : 'Switch to V2.0 (Enterprise)'}
+              <span>▶</span> Watch Video
+            </button>
+            <button
+              onClick={toggleTheme}
+              className="px-3 py-1.5 rounded-full border border-[var(--card-border)] text-[10px] hover:bg-[var(--card-bg)] transition-all font-black uppercase tracking-tight"
+            >
+              {theme === 'enterprise' ? 'V1.0 (Influencer)' : 'V2.0 (Enterprise)'}
             </button>
           </div>
           <div className="relative">
@@ -529,16 +671,22 @@ function App() {
 
       {/* Main Routing Content */}
       <main className="flex-grow pt-20">
+        <ScrollToTop />
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/walkthrough" element={<WalkthroughPage />} />
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/terms" element={<Terms />} />
           <Route path="/resources" element={<Resources />} />
+          <Route path="/support" element={<Support />} />
         </Routes>
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-[var(--card-border)] py-12 text-center text-theme-muted text-sm mt-12 bg-[var(--card-bg)]/50 backdrop-blur-sm">
+      <footer
+        className="border-t border-[var(--card-border)] py-12 text-center text-theme-muted text-sm mt-12 bg-[var(--card-bg)]/50 backdrop-blur-sm"
+        style={{ WebkitTransform: 'translateZ(0)', transform: 'translateZ(0)' }}
+      >
         <div className="flex justify-center mb-6 opacity-75 grayscale hover:grayscale-0 hover:opacity-100 transition-all">
           <Link to="/">
             <Logo className="h-10" showText={false} theme={theme} />
@@ -546,12 +694,15 @@ function App() {
         </div>
         <p className="mb-4 text-theme-muted">© 2026 Mojipass® Ecosystem. The Quad-Winner Marketplace.</p>
         <div className="flex justify-center gap-6">
+          <Link to="/support" className="text-theme-muted hover:text-theme transition-colors font-bold">Support</Link>
           <Link to="/privacy" className="text-theme-muted hover:text-theme transition-colors">Privacy Policy</Link>
           <Link to="/terms" className="text-theme-muted hover:text-theme transition-colors">Terms of Service</Link>
         </div>
       </footer>
 
-      <AiAssistant />
+      <Suspense fallback={null}>
+        <AiAssistant />
+      </Suspense>
     </div>
   );
 }

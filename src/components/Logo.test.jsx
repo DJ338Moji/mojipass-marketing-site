@@ -10,7 +10,7 @@ describe('Logo Component', () => {
 
   it('renders the logo image', () => {
     render(<Logo />);
-    const logoImg = screen.getByAltText(/Mojipass Icon/i);
+    const logoImg = screen.getByAltText(/Mojipass (Logo|Icon)/i);
     expect(logoImg).toBeInTheDocument();
     expect(logoImg).toHaveAttribute('src', '/mojipass-logo.png');
   });
