@@ -33,7 +33,7 @@ jobs:
       - name: Setup Node.js Runtime
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: 'npm'
 
       - name: Run Operational Routine
@@ -87,4 +87,5 @@ jobs:
             automation/logs/*.md
             automation/logs/*.html
             automation/logs/*.json
+          if-no-files-found: ignore
           retention-days: 30
