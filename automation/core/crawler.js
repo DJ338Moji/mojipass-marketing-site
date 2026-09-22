@@ -92,24 +92,39 @@ class Crawler {
             },
             timeout: timeoutMs
           }, (response) => {
-            // Read first small chunk and destroy to save bandwidth
-            response.on('data', () => {});
+            let firstChunk = Buffer.alloc(0);
+            let bytesReceived = 0;
+            response.on('data', (chunk) => {
+              bytesReceived += chunk.length;
+              if (firstChunk.length < 512) {
+                firstChunk = Buffer.concat([firstChunk, chunk]);
+              }
+            });
             response.on('end', () => {
+              const contentLength = response.headers['content-length'] 
+                ? parseInt(response.headers['content-length'], 10) 
+                : bytesReceived;
+              const contentType = response.headers['content-type'] || '';
+              
               resolve({
                 status: response.statusCode,
-                location: response.headers.location
+                location: response.headers.location,
+                contentLength,
+                contentType,
+                bytesReceived,
+                firstChunk
               });
             });
           });
 
-          req.on('error', (err) => resolve({ status: 'ERROR', error: err.message }));
+          req.on('error', (err) => resolve({ status: 'ERROR', error: err.message, bytesReceived: 0, firstChunk: Buffer.alloc(0) }));
           req.on('timeout', () => {
             req.destroy();
-            resolve({ status: 'TIMEOUT', error: 'Timeout' });
+            resolve({ status: 'TIMEOUT', error: 'Timeout', bytesReceived: 0, firstChunk: Buffer.alloc(0) });
           });
           req.end();
         } catch (e) {
-          resolve({ status: 'INVALID_URL', error: e.message });
+          resolve({ status: 'INVALID_URL', error: e.message, bytesReceived: 0, firstChunk: Buffer.alloc(0) });
         }
       });
 
@@ -120,13 +135,40 @@ class Crawler {
         currentUrl = nextUrl;
       } else {
         const durationMs = Date.now() - startTime;
+        const isPdf = currentUrl.toLowerCase().endsWith('.pdf') || (res.contentType && res.contentType.includes('application/pdf'));
+        
+        let isCorrupt = false;
+        let corruptReason = null;
+
+        // 1. Detect 0-byte payload for documents and assets
+        if (res.status === 200 && (res.contentLength === 0 || res.bytesReceived === 0)) {
+          isCorrupt = true;
+          corruptReason = 'Empty 0-byte document (Zero payload received)';
+        }
+
+        // 2. Validate PDF signature (%PDF-)
+        if (res.status === 200 && isPdf && !isCorrupt) {
+          const header = res.firstChunk ? res.firstChunk.toString('latin1', 0, 5) : '';
+          if (!header.startsWith('%PDF')) {
+            isCorrupt = true;
+            corruptReason = `Invalid PDF header: expected '%PDF' but received '${header.trim() || 'HTML/Text'}'`;
+          }
+        }
+
+        const isError = typeof res.status === 'string' || res.status >= 400 || isCorrupt;
+
         return {
           initialUrl: targetUrl,
           finalUrl: currentUrl,
-          status: res.status,
+          status: isCorrupt ? `CORRUPT: ${corruptReason}` : res.status,
+          statusCode: res.status,
+          contentLength: res.contentLength,
+          contentType: res.contentType,
           redirectChain,
           is404: res.status === 404,
-          isError: typeof res.status === 'string' || res.status >= 400,
+          isCorrupt,
+          corruptReason,
+          isError,
           durationMs
         };
       }

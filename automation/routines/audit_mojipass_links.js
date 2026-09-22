@@ -6,12 +6,18 @@ async function auditMojipassLinks(options = {}) {
 
   const urlsToTest = new Set([
     config.mojipass.marketingDomain + '/',
+    config.mojipass.marketingDomain + '/walkthrough',
     config.mojipass.marketingDomain + '/privacy',
     config.mojipass.marketingDomain + '/terms',
     config.mojipass.marketingDomain + '/support',
     config.mojipass.marketingDomain + '/resources',
+    config.mojipass.marketingDomain + '/assets/guides/merchant_onboarding_guide.pdf',
+    config.mojipass.marketingDomain + '/assets/guides/brand_onboarding_guide.pdf',
+    config.mojipass.marketingDomain + '/assets/guides/partner_onboarding_guide.pdf',
+    config.mojipass.marketingDomain + '/assets/guides/shopper_onboarding_guide.pdf',
     config.mojipass.rootDomain + '/',
     config.mojipass.partnerDomain + '/',
+    config.mojipass.partnerDomain + '/accept-invite',
     config.mojipass.appDomain + '/'
   ]);
 
@@ -36,12 +42,12 @@ async function auditMojipassLinks(options = {}) {
   let okCount = 0;
 
   for (const r of results) {
-    if (r.is404) {
+    if (r.is404 || r.isCorrupt) {
       broken.push({
         url: r.initialUrl,
         finalUrl: r.finalUrl,
-        status: 404,
-        source: 'mojipass navigation / portals',
+        status: r.isCorrupt ? r.status : (r.statusCode || 404),
+        source: 'mojipass navigation / portals / assets',
         durationMs: r.durationMs
       });
     } else if (!r.isError) {
@@ -55,7 +61,7 @@ async function auditMojipassLinks(options = {}) {
           url: r.initialUrl,
           finalUrl: r.finalUrl,
           status: r.status,
-          source: 'mojipass navigation / portals',
+          source: 'mojipass navigation / portals / assets',
           durationMs: r.durationMs
         });
       }
