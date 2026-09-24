@@ -1,5 +1,5 @@
 import React, { lazy, Suspense } from 'react';
-import { Routes, Route, Link, useLocation, useNavigate } from 'react-router-dom';
+import { Routes, Route, Link } from 'react-router-dom';
 import {
   BuildingStorefrontIcon,
   MegaphoneIcon,
@@ -8,17 +8,18 @@ import {
   ArrowRightIcon,
   ChartBarIcon,
   BoltIcon,
-  CheckCircleIcon
+  GiftIcon
 } from '@heroicons/react/24/outline';
-import { ShieldCheckIcon, CheckBadgeIcon } from '@heroicons/react/24/solid';
+import { ArrowTrendingUpIcon, ShieldCheckIcon, GlobeAltIcon } from '@heroicons/react/24/solid';
 import Logo from './components/Logo';
 import Privacy from './pages/Privacy';
 import Terms from './pages/Terms';
 import Support from './pages/Support';
 import Resources from './pages/Resources';
-import RoiCalculator from './components/RoiCalculator';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const AiAssistant = lazy(() => import('./components/AiAssistant'));
+const ConsumerJourney = lazy(() => import('./components/ConsumerJourney'));
 const MerchantVideoWalkthrough = lazy(() => import('./components/MerchantVideoWalkthrough'));
 
 function usePostMountAnalytics() {
@@ -50,6 +51,7 @@ const openPortal = (subdomain) => {
     : `https://${subdomain}.mojipass.com`;
 };
 
+
 function Home() {
   const [showMerchantVideo, setShowMerchantVideo] = React.useState(false);
 
@@ -67,331 +69,467 @@ function Home() {
   return (
     <>
       {/* Hero Section */}
-      <section className="pt-36 md:pt-44 pb-20 px-6 relative">
-        <div className="absolute top-20 left-1/2 -translate-x-1/2 w-[800px] h-[600px] bg-gradient-to-br from-emerald-500/20 via-cyan-500/10 to-transparent blur-[120px] rounded-full pointer-events-none -z-10"></div>
+      <section className="pt-40 pb-20 px-6 relative">
+        {/* Abstract Background Glow */}
+        <div className="absolute top-20 left-1/2 -translate-x-1/2 w-[800px] h-[600px] bg-gradient-to-br from-[var(--color-brand)]/20 via-[var(--color-accent)]/10 to-transparent blur-[var(--glow-blur)] rounded-full pointer-events-none -z-10"></div>
 
         <div className="max-w-5xl mx-auto text-center space-y-8">
-          {/* Badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-500/10 border border-emerald-500/30 backdrop-blur-sm shadow-xl text-xs md:text-sm font-bold text-emerald-400 mb-2">
-            <ShieldCheckIcon className="w-4 h-4 text-emerald-400" />
-            <span>Never Lose Another Sale to a Dead Link • 7-Day Free Trial</span>
+          <div
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-sm shadow-xl text-sm font-medium text-emerald-400 mb-4 animate-fade-in-up"
+            style={{ WebkitTransform: 'translateZ(0)', transform: 'translateZ(0)' }}
+          >
+            <SparklesIcon className="w-4 h-4" />
+            <span>The Shopify Integration is Now Live</span>
           </div>
 
-          {/* Headline */}
-          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tighter leading-[1.05] drop-shadow-2xl">
-            <span className="block text-theme">STOP LOSING SALES & AD DOLLARS TO</span>
-            <span className="block bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 via-cyan-400 to-blue-500 py-1">
-              DEAD 404 LINKS
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter leading-[1.0] mb-8 drop-shadow-2xl">
+            <span className="block text-theme mb-2">THE WORLD'S FIRST</span>
+            <span
+              className="block bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 via-cyan-400 to-blue-500 pb-2"
+              style={{
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                backgroundClip: 'text',
+              }}
+            >
+              FRICTIONLESS
             </span>
-            <span className="block text-theme">ON SHOPIFY.</span>
+            <span className="block text-theme">CHECKOUT NETWORK.</span>
           </h1>
 
-          {/* Subtitle */}
-          <p className="text-lg md:text-2xl text-theme-muted max-w-3xl mx-auto leading-relaxed font-medium">
-            <strong className="text-theme">Mojipass Revenue Shield</strong> automatically detects and heals 404 broken URLs, protects paid Meta & TikTok ad traffic, and optimizes your store for AI search engines in under 60 seconds.
+          <p className="text-xl md:text-2xl text-theme-muted max-w-2xl mx-auto mb-12 leading-relaxed font-medium">
+            We bridge the gap between Brands, Merchants, and Creators to reward the Shopper—the world's first purely performance-based retail network. <span className="text-emerald-400">We only win when you win.</span>
           </p>
 
-          {/* Price Anchor Callout */}
-          <div className="inline-block bg-white/5 border border-white/10 rounded-2xl px-6 py-2.5 backdrop-blur-md">
-            <span className="text-xs md:text-sm font-semibold text-theme-muted">
-              🚀 Founder Launch Special:{' '}
-              <span className="line-through opacity-60 text-rose-400">$19.95/mo</span>{' '}
-              <strong className="text-emerald-400 text-base font-black">$8.95/mo</strong> or{' '}
-              <strong className="text-cyan-400 text-base font-black">$60/yr</strong>{' '}
-              <span className="text-emerald-400/90 font-bold">(Locked For Life)</span>
-            </span>
-          </div>
-
-          {/* CTAs */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
-            <a
-              href="https://app.mojipass.com"
-              className="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-emerald-500 to-cyan-500 hover:brightness-110 text-slate-950 rounded-full font-black text-lg shadow-[0_0_40px_-10px_rgba(16,185,129,0.5)] transition-all transform hover:scale-105 flex items-center justify-center gap-2 cursor-pointer"
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
+            <button
+              onClick={() => document.getElementById('tri-sided').scrollIntoView({ behavior: 'smooth' })}
+              className="px-8 py-4 bg-gradient-to-r from-[var(--color-brand)] to-[var(--color-accent)] hover:brightness-110 text-theme rounded-full font-bold text-lg shadow-[0_0_40px_-10px_var(--color-brand)] transition-all transform hover:scale-105 flex items-center gap-2 cursor-pointer"
             >
-              Start Free 7-Day Trial <ArrowRightIcon className="w-5 h-5 stroke-[2.5]" />
-            </a>
+              Choose Your Portal <ArrowRightIcon className="w-5 h-5" />
+            </button>
             <button
               type="button"
               onClick={() => setShowMerchantVideo(true)}
-              className="w-full sm:w-auto px-8 py-4 bg-white/5 hover:bg-white/10 border border-white/10 text-theme rounded-full font-bold text-lg transition-all flex items-center justify-center gap-2 text-emerald-400 cursor-pointer shadow-lg hover:border-emerald-500/30"
+              className="px-8 py-4 bg-white/5 hover:bg-white/10 border border-white/10 text-theme rounded-full font-bold text-lg transition-all flex items-center gap-2 text-emerald-400 cursor-pointer shadow-lg hover:border-emerald-500/30"
             >
-              <span>▶</span> Watch 90s Walkthrough
+              <span className="text-xl">▶</span> Watch 90s Walkthrough
             </button>
           </div>
 
-          <div className="pt-4 flex items-center justify-center gap-3 text-theme-muted text-xs font-bold uppercase tracking-wider">
-            <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
-            1-Click Shopify App Install • Zero Code Changes Required • Cancel Anytime
+          <div className="pt-8 flex items-center justify-center gap-3 text-theme-muted text-xs font-black uppercase tracking-[0.2em]">
+            <div className="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_10px_#10b981] animate-pulse"></div>
+            Purely Performance Periodic Model • Zero Subscription Fees
           </div>
         </div>
       </section>
 
-      {/* Live Social Proof Benchmark Bar */}
-      <div className="border-y border-white/5 bg-white/5 backdrop-blur-sm py-6 overflow-hidden">
-        <div className="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-          <div>
-            <div className="text-2xl md:text-3xl font-black text-emerald-400">93 URLs</div>
-            <div className="text-xs text-theme-muted uppercase tracking-wider font-semibold mt-1">Audited Daily on RenuIQ.com</div>
+      {/* Social Proof Bar */}
+      <div
+        className="border-y border-white/5 bg-white/5 backdrop-blur-sm py-8 overflow-hidden"
+        style={{ WebkitTransform: 'translateZ(0)', transform: 'translateZ(0)' }}
+      >
+        <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-8 text-theme-muted font-medium text-sm">
+          <div className="flex items-center gap-3">
+            <ShieldCheckIcon className="w-6 h-6 text-theme-muted" />
+            Guaranteed Closed-Loop Attribution
           </div>
-          <div>
-            <div className="text-2xl md:text-3xl font-black text-cyan-400">0 Active 404s</div>
-            <div className="text-xs text-theme-muted uppercase tracking-wider font-semibold mt-1">100% Auto-Healed 301s</div>
+          <div className="flex items-center gap-3">
+            <span className="text-emerald-400 font-bold">100%</span> Seamless Shopify Integration
           </div>
-          <div>
-            <div className="text-2xl md:text-3xl font-black text-purple-400">AI AEO Schema</div>
-            <div className="text-xs text-theme-muted uppercase tracking-wider font-semibold mt-1">Live for Google Overviews</div>
-          </div>
-          <div>
-            <div className="text-2xl md:text-3xl font-black text-emerald-400">$0 Wasted</div>
-            <div className="text-xs text-theme-muted uppercase tracking-wider font-semibold mt-1">Ad Spend Protected</div>
+          <div className="flex items-center gap-3">
+            <GlobeAltIcon className="w-6 h-6 text-theme-muted" />
+            Universal SDK Incoming
           </div>
         </div>
       </div>
 
-      {/* 3 Core Revenue Shield Pillars */}
-      <section id="features" className="py-24 px-6 relative z-10">
+      <Suspense fallback={null}>
+        <ConsumerJourney onOpenWalkthrough={() => setShowMerchantVideo(true)} />
+      </Suspense>
+
+      {/* Bento Box: Tri-Sided Marketplace */}
+      <section id="tri-sided" className="py-24 px-6 relative z-10">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-xs font-black uppercase tracking-widest mb-3">
-              Core Revenue Protections
-            </div>
-            <h2 className="text-3xl md:text-5xl font-black text-theme tracking-tight mb-4">
-              Three Automated Shields. Zero Leaked Revenue.
-            </h2>
-            <p className="text-theme-muted text-lg max-w-2xl mx-auto">
-              Shopify stores lose thousands every year to technical decay. Revenue Shield handles it automatically in the background.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* Shield 1: 404 Auto-Healer */}
-            <div className="bg-[var(--card-bg)] border border-[var(--card-border)] p-8 rounded-3xl relative overflow-hidden backdrop-blur-sm hover:border-emerald-500/40 transition-all group">
-              <div className="w-14 h-14 bg-emerald-500/10 rounded-2xl flex items-center justify-center mb-6 border border-emerald-500/20">
-                <ShieldCheckIcon className="w-7 h-7 text-emerald-400" />
-              </div>
-              <h3 className="text-2xl font-bold mb-3 text-theme">Autonomous 404 Healer</h3>
-              <p className="text-theme-muted mb-6 leading-relaxed text-sm">
-                Crawls your store daily. When a shopper lands on a deleted product, expired sale URL, or broken link, it instantly calculates the closest active category match and applies a 301 redirect.
-              </p>
-              <ul className="space-y-2.5 text-xs text-theme-muted mb-6">
-                <li className="flex items-center gap-2 text-theme font-medium">
-                  <CheckCircleIcon className="w-4 h-4 text-emerald-400" /> Zero manual spreadsheets or CSV imports
-                </li>
-                <li className="flex items-center gap-2 text-theme font-medium">
-                  <CheckCircleIcon className="w-4 h-4 text-emerald-400" /> Protects Google SEO search rankings
-                </li>
-                <li className="flex items-center gap-2 text-theme font-medium">
-                  <CheckCircleIcon className="w-4 h-4 text-emerald-400" /> Sub-15ms edge redirect speed
-                </li>
-              </ul>
-            </div>
-
-            {/* Shield 2: Ad Campaign Protector */}
-            <div className="bg-[var(--card-bg)] border border-[var(--card-border)] p-8 rounded-3xl relative overflow-hidden backdrop-blur-sm hover:border-cyan-500/40 transition-all group">
-              <div className="w-14 h-14 bg-cyan-500/10 rounded-2xl flex items-center justify-center mb-6 border border-cyan-500/20">
-                <BoltIcon className="w-7 h-7 text-cyan-400" />
-              </div>
-              <h3 className="text-2xl font-bold mb-3 text-theme">Paid Ad Spend Sentinel</h3>
-              <p className="text-theme-muted mb-6 leading-relaxed text-sm">
-                Monitors incoming traffic with campaign tags (Meta, TikTok, Google UTMs, influencer links). If a product sells out or handle changes, shoppers are redirected to active alternatives with tracking preserved.
-              </p>
-              <ul className="space-y-2.5 text-xs text-theme-muted mb-6">
-                <li className="flex items-center gap-2 text-theme font-medium">
-                  <CheckCircleIcon className="w-4 h-4 text-cyan-400" /> Never burn paid ad spend on 404 pages
-                </li>
-                <li className="flex items-center gap-2 text-theme font-medium">
-                  <CheckCircleIcon className="w-4 h-4 text-cyan-400" /> Preserves UTM attribution tags
-                </li>
-                <li className="flex items-center gap-2 text-theme font-medium">
-                  <CheckCircleIcon className="w-4 h-4 text-cyan-400" /> Protects influencer campaign ROAS
-                </li>
-              </ul>
-            </div>
-
-            {/* Shield 3: AEO & AI Search Schema */}
-            <div className="bg-[var(--card-bg)] border border-[var(--card-border)] p-8 rounded-3xl relative overflow-hidden backdrop-blur-sm hover:border-purple-500/40 transition-all group">
-              <div className="w-14 h-14 bg-purple-500/10 rounded-2xl flex items-center justify-center mb-6 border border-purple-500/20">
-                <SparklesIcon className="w-7 h-7 text-purple-400" />
-              </div>
-              <h3 className="text-2xl font-bold mb-3 text-theme">1-Click AI Search Schema</h3>
-              <p className="text-theme-muted mb-6 leading-relaxed text-sm">
-                Injects Google AI Overview, Perplexity, and ChatGPT structured JSON-LD (<code className="text-emerald-400 text-xs">Product</code>, <code className="text-emerald-400 text-xs">FAQPage</code>, <code className="text-emerald-400 text-xs">MedicalWebPage</code>) so conversational AI search engines cite your store.
-              </p>
-              <ul className="space-y-2.5 text-xs text-theme-muted mb-6">
-                <li className="flex items-center gap-2 text-theme font-medium">
-                  <CheckCircleIcon className="w-4 h-4 text-purple-400" /> Formatted for Google AI Overviews
-                </li>
-                <li className="flex items-center gap-2 text-theme font-medium">
-                  <CheckCircleIcon className="w-4 h-4 text-purple-400" /> Automatic seasonal FAQ generation
-                </li>
-                <li className="flex items-center gap-2 text-theme font-medium">
-                  <CheckCircleIcon className="w-4 h-4 text-purple-400" /> Free rich-snippets indexing boost
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Interactive ROI Calculator */}
-      <RoiCalculator />
-
-      {/* The Trojan Horse: Coming Soon Co-Marketing Banner */}
-      <section className="py-16 px-6 relative z-10">
-        <div className="max-w-5xl mx-auto bg-gradient-to-r from-emerald-950/60 via-slate-900 to-cyan-950/60 border border-emerald-500/30 rounded-3xl p-8 md:p-12 shadow-2xl relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-96 h-96 bg-cyan-500/10 blur-[100px] rounded-full pointer-events-none"></div>
-
-          <div className="flex flex-col lg:flex-row items-center justify-between gap-8 relative z-10">
-            <div className="space-y-4 max-w-2xl">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-400 text-xs font-black uppercase tracking-wider border border-emerald-500/30">
-                🚀 Coming Soon • Subscriber Exclusive
-              </div>
-              <h3 className="text-2xl md:text-3xl font-black text-theme tracking-tight">
-                The Mojipass Co-Marketing & Cross-Store Network
-              </h3>
-              <p className="text-theme-muted text-sm md:text-base leading-relaxed">
-                What happens when a customer lands on an out-of-stock item? Instead of a dead end, Revenue Shield subscribers will get priority access to our <strong>Zero-Ad-Spend Co-Marketing Network</strong>: monetize dead inventory by cross-recommending verified partner brand products for <strong>15–20% affiliate commissions</strong>.
-              </p>
-              <div className="flex items-center gap-4 text-xs font-bold text-slate-300">
-                <span>✓ Zero inventory risk</span>
-                <span>✓ Automated commission payouts</span>
-                <span>✓ Verified Shopify brands only</span>
-              </div>
-            </div>
-
-            <div className="shrink-0 text-center lg:text-right">
-              <div className="text-xs uppercase tracking-widest text-emerald-400 font-bold mb-2">Priority Beta Access</div>
-              <div className="text-sm font-semibold text-theme-muted mb-4">Included free for all Revenue Shield subscribers</div>
-              <a
-                href="https://app.mojipass.com"
-                className="px-6 py-3.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black rounded-xl text-sm transition-all inline-flex items-center gap-2"
-              >
-                Lock In Founder Access <ArrowRightIcon className="w-4 h-4" />
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Pricing Section */}
-      <section id="pricing" className="py-20 px-6 relative z-10">
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-5xl font-black text-theme tracking-tight mb-4">
-              Simple, Predictable Founder Pricing.
-            </h2>
-            <p className="text-theme-muted text-lg max-w-xl mx-auto">
-              Priced at less than the cost of a single recovered order. Lock in early adopter pricing before rates increase.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto items-stretch">
-            {/* Monthly Plan */}
-            <div className="bg-[var(--card-bg)] border border-[var(--card-border)] rounded-3xl p-8 flex flex-col justify-between backdrop-blur-sm hover:border-emerald-500/30 transition-all">
-              <div>
-                <div className="text-xs uppercase font-bold text-theme-muted tracking-wider mb-2">Monthly Founder Tier</div>
-                <div className="flex items-baseline gap-2 mb-4">
-                  <span className="text-4xl md:text-5xl font-black text-theme">$8.95</span>
-                  <span className="text-theme-muted text-sm font-semibold">/ month</span>
-                  <span className="line-through text-sm text-theme-muted ml-2 opacity-60">$19.95</span>
-                </div>
-                <p className="text-sm text-theme-muted mb-6">
-                  Perfect for fast-growing Shopify stores wanting zero-leak protection without annual commitments.
-                </p>
-                <ul className="space-y-3 text-xs text-theme-muted mb-8">
-                  <li className="flex items-center gap-2 text-theme"><CheckBadgeIcon className="w-4 h-4 text-emerald-400" /> Daily automated 404 URL crawl & healing</li>
-                  <li className="flex items-center gap-2 text-theme"><CheckBadgeIcon className="w-4 h-4 text-emerald-400" /> Meta & TikTok ad spend link protector</li>
-                  <li className="flex items-center gap-2 text-theme"><CheckBadgeIcon className="w-4 h-4 text-emerald-400" /> Automated AEO & Google AI Overview schema</li>
-                  <li className="flex items-center gap-2 text-theme"><CheckBadgeIcon className="w-4 h-4 text-emerald-400" /> 7-day free trial, cancel in 1 click</li>
-                </ul>
-              </div>
-              <a
-                href="https://app.mojipass.com"
-                className="w-full py-4 rounded-xl bg-white/5 hover:bg-white/10 border border-white/15 text-theme font-bold text-center transition-all block"
-              >
-                Start 7-Day Free Trial
-              </a>
-            </div>
-
-            {/* Annual Pass */}
-            <div className="bg-gradient-to-b from-emerald-950/40 via-[var(--card-bg)] to-[var(--card-bg)] border-2 border-emerald-500/50 rounded-3xl p-8 flex flex-col justify-between backdrop-blur-md relative shadow-2xl">
-              <div className="absolute -top-3.5 right-6 bg-gradient-to-r from-emerald-500 to-cyan-500 text-slate-950 font-black text-[11px] px-3 py-1 rounded-full uppercase tracking-wider">
-                Best Value • Save 44%
-              </div>
-              <div>
-                <div className="text-xs uppercase font-bold text-emerald-400 tracking-wider mb-2">Annual Founder Pass</div>
-                <div className="flex items-baseline gap-2 mb-4">
-                  <span className="text-4xl md:text-5xl font-black text-theme">$60.00</span>
-                  <span className="text-theme-muted text-sm font-semibold">/ year ($5.00/mo)</span>
-                  <span className="line-through text-sm text-theme-muted ml-2 opacity-60">$199.00</span>
-                </div>
-                <p className="text-sm text-theme-muted mb-6">
-                  Guaranteed 365 days of revenue protection with grandfathered pricing locked in for life.
-                </p>
-                <ul className="space-y-3 text-xs text-theme-muted mb-8">
-                  <li className="flex items-center gap-2 text-theme"><CheckBadgeIcon className="w-4 h-4 text-emerald-400" /> Everything in Monthly, plus:</li>
-                  <li className="flex items-center gap-2 text-theme"><CheckBadgeIcon className="w-4 h-4 text-emerald-400" /> Priority Co-Marketing Partner Matching</li>
-                  <li className="flex items-center gap-2 text-theme"><CheckBadgeIcon className="w-4 h-4 text-emerald-400" /> Corrupted media & 0-byte asset scanner</li>
-                  <li className="flex items-center gap-2 text-theme"><CheckBadgeIcon className="w-4 h-4 text-emerald-400" /> Grandfathered $5/mo rate forever</li>
-                </ul>
-              </div>
-              <a
-                href="https://app.mojipass.com"
-                className="w-full py-4 rounded-xl bg-gradient-to-r from-emerald-500 to-cyan-500 hover:brightness-110 text-slate-950 font-black text-center transition-all block shadow-lg"
-              >
-                Get Annual Pass ($60/yr)
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Tri-Sided Portal Gateway */}
-      <section id="portals" className="py-20 px-6 border-t border-white/5 relative z-10 bg-black/10">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
-            <h3 className="text-2xl md:text-3xl font-black text-theme mb-2">Mojipass Ecosystem Portals</h3>
-            <p className="text-theme-muted text-sm">Access your command center across the platform.</p>
+            <h1 className="text-6xl md:text-8xl font-black text-theme mb-8 tracking-tighter">
+              MOJIPASS®
+            </h1>
+            <h2 className="text-3xl md:text-5xl font-bold mb-4">One Ecosystem. Four Winners.</h2>
+            <p className="text-theme-muted text-lg">See how Mojipass® creates value for every player in the retail loop.</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="bg-[var(--card-bg)] border border-[var(--card-border)] p-6 rounded-2xl">
-              <BuildingStorefrontIcon className="w-6 h-6 text-emerald-400 mb-3" />
-              <h4 className="font-bold text-theme mb-1">Shopify Merchants</h4>
-              <p className="text-xs text-theme-muted mb-4">Access Revenue Shield, 301 logs, and SEO schema.</p>
-              <button onClick={() => openPortal('app')} className="w-full py-2.5 rounded-lg bg-emerald-500/10 text-emerald-400 text-xs font-bold hover:bg-emerald-500/20 border border-emerald-500/20">
-                Open Merchant App &rarr;
+
+            {/* Card 1: Brands */}
+            <div
+              id="brands"
+              className="group relative bg-[var(--card-bg)] border border-[var(--card-border)] p-8 rounded-3xl hover:border-[var(--color-brand)]/30 transition-all overflow-hidden backdrop-blur-sm"
+              style={{ WebkitTransform: 'translateZ(0)', transform: 'translateZ(0)' }}
+            >
+              <div className="absolute top-0 right-0 w-64 h-64 bg-[var(--color-brand)]/5 blur-[var(--glow-blur)] rounded-full group-hover:bg-[var(--color-brand)]/10 transition-all"></div>
+
+              <div className="w-14 h-14 bg-blue-500/10 rounded-2xl flex items-center justify-center mb-6 border border-blue-500/20">
+                <MegaphoneIcon className="w-7 h-7 text-blue-400" />
+              </div>
+              <h3 className="text-2xl font-bold mb-3 text-theme">Sponsoring Brands</h3>
+              <p className="text-theme-muted mb-8 leading-relaxed">
+                Acquire new customers with zero risk. Distribute samples or sponsored trials directly into the hands of highly-targeted buyers at the exact moment of checkout. Fixed CPAs.
+              </p>
+
+              <ul className="space-y-3 mb-8 text-sm text-theme-muted">
+                <li className="flex items-center gap-2"><ArrowTrendingUpIcon className="w-4 h-4 text-[var(--color-brand)]" /> AI Audience Matching</li>
+                <li className="flex items-center gap-2"><ArrowTrendingUpIcon className="w-4 h-4 text-[var(--color-brand)]" /> Real-time Analytics Dashboard</li>
+              </ul>
+
+              <button
+                onClick={() => openPortal('brand')}
+                className="w-full py-4 rounded-xl bg-blue-500/10 text-blue-400 font-bold hover:bg-blue-500/20 border border-blue-500/20 transition-all flex justify-center items-center gap-2 group-hover:shadow-[0_0_20px_-5px_rgba(59,130,246,0.3)]"
+              >
+                Access Brand Portal <ArrowRightIcon className="w-4 h-4" />
               </button>
             </div>
 
-            <div className="bg-[var(--card-bg)] border border-[var(--card-border)] p-6 rounded-2xl">
-              <MegaphoneIcon className="w-6 h-6 text-blue-400 mb-3" />
-              <h4 className="font-bold text-theme mb-1">Brand Command Center</h4>
-              <p className="text-xs text-theme-muted mb-4">Manage multi-store co-marketing campaigns and terms.</p>
-              <button onClick={() => openPortal('brand')} className="w-full py-2.5 rounded-lg bg-blue-500/10 text-blue-400 text-xs font-bold hover:bg-blue-500/20 border border-blue-500/20">
-                Open Brand Portal &rarr;
+            {/* Card 2: Merchants */}
+            <div
+              id="merchants"
+              className="group relative bg-[var(--card-bg)] border border-[var(--card-border)] p-8 rounded-3xl hover:border-[var(--color-brand)]/30 transition-all overflow-hidden transform md:-translate-y-4 shadow-2xl backdrop-blur-sm"
+              style={{ WebkitTransform: 'translateZ(0)', transform: 'translateZ(0)' }}
+            >
+              <div className="absolute top-0 right-0 w-64 h-64 bg-[var(--color-brand)]/5 blur-[var(--glow-blur)] rounded-full group-hover:bg-[var(--color-brand)]/10 transition-all"></div>
+
+              <div className="w-14 h-14 bg-[var(--color-brand)]/10 rounded-2xl flex items-center justify-center mb-6 border border-[var(--color-brand)]/20">
+                <BuildingStorefrontIcon className="w-7 h-7 text-[var(--color-brand)]" />
+              </div>
+              <h3 className="text-2xl font-bold mb-3 text-theme">Shopify Merchants</h3>
+              <p className="text-theme-muted mb-8 leading-relaxed">
+                Increase your checkout conversion rate and AOV without spending a dime. Offer your customers premium free gifts sponsored entirely by external brands.
+              </p>
+
+              <ul className="space-y-3 mb-8 text-sm text-theme-muted">
+                <li className="flex items-center gap-2"><ArrowTrendingUpIcon className="w-4 h-4 text-[var(--color-brand)]" /> 1-Click Shopify Install</li>
+                <li className="flex items-center gap-2"><ArrowTrendingUpIcon className="w-4 h-4 text-[var(--color-brand)]" /> Zero Inventory Management</li>
+              </ul>
+
+              <button
+                onClick={() => openPortal('app')}
+                className="w-full py-4 rounded-xl bg-[var(--color-brand)] text-theme font-bold hover:brightness-110 transition-all flex justify-center items-center gap-2 shadow-[0_0_20px_-5px_var(--color-brand)]"
+              >
+                Install Shopify App <ArrowRightIcon className="w-4 h-4" />
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setShowMerchantVideo(true)}
+                className="w-full mt-3 py-3 rounded-xl bg-white/5 border border-white/10 text-theme font-semibold hover:bg-white/10 transition-all flex justify-center items-center gap-2 text-xs uppercase tracking-wider text-emerald-400"
+              >
+                <span>▶ Watch 90s Video Walkthrough</span>
               </button>
             </div>
 
-            <div className="bg-[var(--card-bg)] border border-[var(--card-border)] p-6 rounded-2xl">
-              <UserGroupIcon className="w-6 h-6 text-purple-400 mb-3" />
-              <h4 className="font-bold text-theme mb-1">Vetted Creators & Partners</h4>
-              <p className="text-xs text-theme-muted mb-4">Track universal links, click-throughs, and payouts.</p>
-              <button onClick={() => openPortal('partner')} className="w-full py-2.5 rounded-lg bg-purple-500/10 text-purple-400 text-xs font-bold hover:bg-purple-500/20 border border-purple-500/20">
-                Open Partner Hub &rarr;
+            {/* Card 3: Partners */}
+            <div
+              id="partners"
+              className="group relative bg-[var(--card-bg)] border border-[var(--card-border)] p-8 rounded-3xl hover:border-[var(--color-brand)]/30 transition-all overflow-hidden backdrop-blur-sm"
+              style={{ WebkitTransform: 'translateZ(0)', transform: 'translateZ(0)' }}
+            >
+              <div className="absolute top-0 right-0 w-64 h-64 bg-[var(--color-brand)]/5 blur-[var(--glow-blur)] rounded-full group-hover:bg-[var(--color-brand)]/10 transition-all"></div>
+
+              <div className="w-14 h-14 bg-purple-500/10 rounded-2xl flex items-center justify-center mb-6 border border-purple-500/20">
+                <UserGroupIcon className="w-7 h-7 text-purple-400" />
+              </div>
+              <h3 className="text-2xl font-bold mb-3 text-theme">Creators & Partners</h3>
+              <p className="text-theme-muted mb-8 leading-relaxed">
+                Monetize your audience with high-converting brand matches. Share your unique links and get paid the second a consumer rewards themselves.
+              </p>
+
+              <ul className="space-y-3 mb-8 text-sm text-theme-muted">
+                <li className="flex items-center gap-2"><ArrowTrendingUpIcon className="w-4 h-4 text-[var(--color-brand)]" /> Instant Link Generation</li>
+                <li className="flex items-center gap-2"><ArrowTrendingUpIcon className="w-4 h-4 text-[var(--color-brand)]" /> Guaranteed Ledger Commission</li>
+              </ul>
+
+              <button
+                onClick={() => openPortal('partner')}
+                className="w-full py-4 rounded-xl bg-purple-500/10 text-purple-400 font-bold hover:bg-purple-500/20 border border-purple-500/20 transition-all flex justify-center items-center gap-2 group-hover:shadow-[0_0_20px_-5px_rgba(168,85,247,0.3)]"
+              >
+                Access Partner Hub <ArrowRightIcon className="w-4 h-4" />
               </button>
             </div>
+
+            {/* Card 4: Consumers/Shoppers */}
+            <div
+              className="group relative bg-[var(--card-bg)] border border-[var(--card-border)] p-8 rounded-3xl hover:border-emerald-500/40 transition-all overflow-hidden backdrop-blur-sm md:col-span-3"
+              style={{ WebkitTransform: 'translateZ(0)', transform: 'translateZ(0)' }}
+            >
+              <div className="absolute -right-20 -bottom-20 w-96 h-96 bg-emerald-500/10 blur-[100px] rounded-full group-hover:bg-emerald-500/20 transition-all"></div>
+
+              <div className="flex flex-col md:flex-row items-center gap-12">
+                <div className="flex-1">
+                  <div className="w-14 h-14 bg-emerald-500/10 rounded-2xl flex items-center justify-center mb-6 border border-emerald-500/20">
+                    <SparklesIcon className="w-7 h-7 text-emerald-400" />
+                  </div>
+                  <h3 className="text-3xl font-bold mb-4" style={{ color: 'var(--color-text)' }}>The Everyday Shopper</h3>
+                  <p className="text-lg mb-6 leading-relaxed" style={{ color: 'var(--color-text-muted)' }}>
+                    The ultimate winner. Shoppers unlock premium, full-sized trials and exclusive gifts from top-tier brands—simply for making a purchase they already planned. No hoops, no friction, just pure delight at checkout.
+                  </p>
+                  <div className="flex items-center gap-6 text-slate-400 font-bold">
+                    <div className="flex items-center gap-2 tracking-tight text-sm">
+                      <BoltIcon className="w-4 h-4 text-emerald-500/60" /> Zero Extra Cost
+                    </div>
+                    <div className="flex items-center gap-2 tracking-tight text-sm">
+                      <GiftIcon className="w-4 h-4 text-emerald-500/60" /> Full-Sized Rewards
+                    </div>
+                  </div>
+                </div>
+                <div
+                  className="relative w-full md:w-80 h-48 bg-[var(--color-bg)] border border-[var(--card-border)] rounded-2xl backdrop-blur-md flex items-center justify-center overflow-hidden group-hover:shadow-[0_0_20px_rgba(16,185,129,0.2)] transition-all relative z-10"
+                  style={{ WebkitTransform: 'translateZ(0)', transform: 'translateZ(0)' }}
+                >
+                  <div className="absolute inset-0 transition-opacity bg-gradient-to-br from-emerald-500/5 to-transparent opacity-50"></div>
+                  <div className="text-center relative z-20">
+                    <div className="text-xs uppercase tracking-widest mb-2 font-bold" style={{ color: 'var(--color-text-muted)' }}>Mojipass® Revealed</div>
+                    <div className="text-2xl font-black tracking-tighter" style={{ color: 'var(--color-text)' }}>GIFT UNLOCKED</div>
+                    <div className="text-emerald-500 text-sm font-bold">Complimentary with Purchase</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
       </section>
 
-      {/* Video Walkthrough Modal */}
+      {/* How it Works / Step-by-Step Playbook */}
+      <section className="py-24 px-6 bg-[var(--color-bg)] border-t border-white/5 relative z-10">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-5xl font-black mb-4">The Frictionless Playbook.</h2>
+            <p className="text-theme-muted text-lg">How to win with Mojipass® in three simple steps.</p>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+            {/* Brands Playbook */}
+            <div className="relative group">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/10 blur-[50px] rounded-full"></div>
+              <h3 className="text-2xl font-bold mb-8 flex items-center gap-3">
+                <span className="w-8 h-8 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center text-sm border border-blue-500/30">1</span>
+                Sponsoring Brands
+              </h3>
+              <div className="space-y-6 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px before:h-full before:w-0.5 before:bg-gradient-to-b before:from-blue-500/50 before:via-white/10 before:to-transparent">
+                <div className="relative flex items-start gap-4 z-10">
+                  <div className="w-10 h-10 rounded-full bg-[var(--card-bg)] border border-blue-500/40 flex items-center justify-center shrink-0 shadow-[0_0_15px_rgba(59,130,246,0.2)]">
+                    <span className="text-blue-400 font-bold text-sm">A</span>
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-theme mb-1">Set Your CPA</h4>
+                    <p className="text-sm text-theme-muted leading-relaxed tracking-wide">Determine your exact Cost-Per-Acquisition budget and upload your campaign creative in seconds.</p>
+                  </div>
+                </div>
+                <div className="relative flex items-start gap-4 z-10">
+                  <div className="w-10 h-10 rounded-full bg-[var(--card-bg)] border border-white/10 flex items-center justify-center shrink-0">
+                    <span className="text-theme-muted font-bold text-sm">B</span>
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-theme mb-1">AI Matchmaking</h4>
+                    <p className="text-sm text-theme-muted leading-relaxed tracking-wide">Our Bayesian Engine instantly matches your offer to high-intent Shopify audiences.</p>
+                  </div>
+                </div>
+                <div className="relative flex items-start gap-4 z-10">
+                  <div className="w-10 h-10 rounded-full bg-[var(--card-bg)] border border-white/10 flex items-center justify-center shrink-0">
+                    <span className="text-theme-muted font-bold text-sm">C</span>
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-theme mb-1">Acquire & Scale</h4>
+                    <p className="text-sm text-theme-muted leading-relaxed tracking-wide">Pay only when a shopper successfully claims your offer. Infinite, risk-free scaling.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Merchants Playbook */}
+            <div className="relative group">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-[var(--color-brand)]/10 blur-[50px] rounded-full"></div>
+              <h3 className="text-2xl font-bold mb-8 flex items-center gap-3">
+                <span className="w-8 h-8 rounded-full bg-[var(--color-brand)]/20 text-[var(--color-brand)] flex items-center justify-center text-sm border border-[var(--color-brand)]/30">2</span>
+                Shopify Merchants
+              </h3>
+              <div className="space-y-6 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px before:h-full before:w-0.5 before:bg-gradient-to-b before:from-[var(--color-brand)]/50 before:via-white/10 before:to-transparent">
+                <div className="relative flex items-start gap-4 z-10">
+                  <div className="w-10 h-10 rounded-full bg-[var(--card-bg)] border border-[var(--color-brand)]/40 flex items-center justify-center shrink-0 shadow-[0_0_15px_var(--color-brand)]">
+                    <span className="text-[var(--color-brand)] font-bold text-sm">A</span>
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-theme mb-1">1-Click Install</h4>
+                    <p className="text-sm text-theme-muted leading-relaxed tracking-wide">Install the Mojipass app from the Shopify App Store. No coding required.</p>
+                  </div>
+                </div>
+                <div className="relative flex items-start gap-4 z-10">
+                  <div className="w-10 h-10 rounded-full bg-[var(--card-bg)] border border-white/10 flex items-center justify-center shrink-0">
+                    <span className="text-theme-muted font-bold text-sm">B</span>
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-theme mb-1">Select Rewards</h4>
+                    <p className="text-sm text-theme-muted leading-relaxed tracking-wide">Review the AI Synergy scores and toggle on the free gifts you want to offer your shoppers.</p>
+                  </div>
+                </div>
+                <div className="relative flex items-start gap-4 z-10">
+                  <div className="w-10 h-10 rounded-full bg-[var(--card-bg)] border border-white/10 flex items-center justify-center shrink-0">
+                    <span className="text-theme-muted font-bold text-sm">C</span>
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-theme mb-1">Boost AOV & Earn</h4>
+                    <p className="text-sm text-theme-muted leading-relaxed tracking-wide">Shoppers complete checkout, unlock their sponsored gift, and you earn an instant affiliate bounty.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Creators Playbook */}
+            <div className="relative group">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-purple-500/10 blur-[50px] rounded-full"></div>
+              <h3 className="text-2xl font-bold mb-8 flex items-center gap-3">
+                <span className="w-8 h-8 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center text-sm border border-purple-500/30">3</span>
+                Creators & Partners
+              </h3>
+              <div className="space-y-6 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px before:h-full before:w-0.5 before:bg-gradient-to-b before:from-purple-500/50 before:via-white/10 before:to-transparent">
+                <div className="relative flex items-start gap-4 z-10">
+                  <div className="w-10 h-10 rounded-full bg-[var(--card-bg)] border border-purple-500/40 flex items-center justify-center shrink-0 shadow-[0_0_15px_rgba(168,85,247,0.2)]">
+                    <span className="text-purple-400 font-bold text-sm">A</span>
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-theme mb-1">Join the Hub</h4>
+                    <p className="text-sm text-theme-muted leading-relaxed tracking-wide">Create your dynamic profile in the Partner Portal to unlock the campaign library.</p>
+                  </div>
+                </div>
+                <div className="relative flex items-start gap-4 z-10">
+                  <div className="w-10 h-10 rounded-full bg-[var(--card-bg)] border border-white/10 flex items-center justify-center shrink-0">
+                    <span className="text-theme-muted font-bold text-sm">B</span>
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-theme mb-1">Generate Links</h4>
+                    <p className="text-sm text-theme-muted leading-relaxed tracking-wide">Grab high-converting tracking links for Mojipass® enabled merchants and brands.</p>
+                  </div>
+                </div>
+                <div className="relative flex items-start gap-4 z-10">
+                  <div className="w-10 h-10 rounded-full bg-[var(--card-bg)] border border-white/10 flex items-center justify-center shrink-0">
+                    <span className="text-theme-muted font-bold text-sm">C</span>
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-theme mb-1">Monetize Influence</h4>
+                    <p className="text-sm text-theme-muted leading-relaxed tracking-wide">Earn guaranteed ledger commissions the second your audience claims a sponsored reward.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* Happiness Quotient & Intelligence Engine */}
+
+      <section className="py-24 px-6 border-t border-white/5 relative overflow-hidden bg-black/10">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-emerald-500/5 blur-[120px] rounded-full pointer-events-none"></div>
+        <div className="max-w-7xl mx-auto">
+          <div className="flex items-center gap-3 mb-10">
+            <div className="px-3 py-1 bg-emerald-500/10 rounded-full border border-emerald-500/20 text-xs font-black text-emerald-400 uppercase tracking-widest">
+              The Happiness Quotient
+            </div>
+            <div className="h-px flex-grow bg-white/5"></div>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            <div>
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-black mb-8 tracking-tighter text-theme leading-[1.0]">
+                POWERED BY THE <span className="text-emerald-400">INTELLIGENCE</span> ENGINE.
+              </h2>
+              <p className="text-theme-muted text-lg mb-12 leading-relaxed max-w-xl font-medium">
+                We've applied complex probabilistic math and psychological dynamics to harmonize the network. Our AI ensures every participant stays giddy with value.
+              </p>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-10">
+                <div className="space-y-3">
+                  <div className="flex items-center gap-3 text-theme font-bold">
+                    <div className="w-8 h-8 bg-emerald-500/10 rounded-lg flex items-center justify-center border border-emerald-500/20 shadow-lg">
+                      <ChartBarIcon className="w-4 h-4 text-emerald-400" />
+                    </div>
+                    Bayesian Balancer
+                  </div>
+                  <p className="text-theme-muted text-sm leading-relaxed">Dynamically adjusting rewards to find the perfect efficiency frontier for every CPA.</p>
+                </div>
+                <div className="space-y-3">
+                  <div className="flex items-center gap-3 text-theme font-bold">
+                    <div className="w-8 h-8 bg-cyan-500/10 rounded-lg flex items-center justify-center border border-cyan-500/20 shadow-lg">
+                      <SparklesIcon className="w-4 h-4 text-cyan-400" />
+                    </div>
+                    Synergy Logic
+                  </div>
+                  <p className="text-theme-muted text-sm leading-relaxed">AI-powered brand matches ensure shoppers only see gifts they statistically deserve to love.</p>
+                </div>
+                <div className="space-y-3">
+                  <div className="flex items-center gap-3 text-theme font-bold">
+                    <div className="w-8 h-8 bg-purple-500/10 rounded-lg flex items-center justify-center border border-purple-500/20 shadow-lg">
+                      <BoltIcon className="w-4 h-4 text-purple-400" />
+                    </div>
+                    Velocity Tiers
+                  </div>
+                  <p className="text-theme-muted text-sm leading-relaxed">Unlocking achievement payouts for partners who drive high-quality shopper retention.</p>
+                </div>
+                <div className="space-y-3">
+                  <div className="flex items-center gap-3 text-theme font-bold">
+                    <div className="w-8 h-8 bg-emerald-500/10 rounded-lg flex items-center justify-center border border-emerald-500/20 shadow-lg">
+                      <ArrowTrendingUpIcon className="w-4 h-4 text-emerald-400" />
+                    </div>
+                    Endowed Progress
+                  </div>
+                  <p className="text-theme-muted text-sm leading-relaxed">Onboarding that helps brands launch their first campaign in record time with 80% pre-filled data.</p>
+                </div>
+              </div>
+            </div>
+            <div className="relative group">
+              <div className="absolute -inset-1 bg-gradient-to-r from-emerald-500 to-cyan-500 rounded-3xl blur opacity-20 group-hover:opacity-30 transition duration-1000"></div>
+              <div
+                className="relative bg-[var(--card-bg)] border border-[var(--card-border)] rounded-3xl p-10 shadow-2xl overflow-hidden backdrop-blur-xl"
+                style={{ WebkitTransform: 'translateZ(0)', transform: 'translateZ(0)' }}
+              >
+                <div className="flex items-center justify-between mb-8">
+                  <div className="text-[10px] font-black text-theme-muted uppercase tracking-[0.2em]">Network Happiness Matrix v2.0</div>
+                  <div className="flex gap-1.5">
+                    <div className="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_10px_#10b981]"></div>
+                    <div className="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_10px_#10b981]"></div>
+                    <div className="w-2 h-2 rounded-full bg-slate-700"></div>
+                  </div>
+                </div>
+                <div className="h-64 flex items-end gap-2.5 px-2">
+                  {[45, 60, 40, 85, 55, 75, 95, 80, 85, 100].map((h, i) => (
+                    <div key={i} className="flex-1 bg-gradient-to-t from-emerald-600 to-emerald-400 rounded-t-sm shadow-inner transition-all hover:scale-105" style={{ height: `${h}%` }}></div>
+                  ))}
+                </div>
+                <div className="mt-10 pt-10 border-t border-white/5 flex justify-between items-center">
+                  <div>
+                    <div className="text-3xl font-black text-theme tracking-tighter transition-all hover:text-emerald-400">+142%</div>
+                    <div className="text-[10px] text-theme-muted uppercase font-black tracking-widest mt-1">Giddy Quotient</div>
+                  </div>
+                  <div className="text-right">
+                    <div className="text-3xl font-black text-emerald-400 tracking-tighter">99.9%</div>
+                    <div className="text-[10px] text-theme-muted uppercase font-black tracking-widest mt-1">Synergy Match</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      {/* Merchant Video Walkthrough Modal */}
       {showMerchantVideo && (
         <div
           className="fixed inset-0 z-50 bg-black/85 backdrop-blur-lg flex items-center justify-center p-4 sm:p-6"
           onClick={() => setShowMerchantVideo(false)}
         >
-          <div onClick={(e) => e.stopPropagation()} className="w-full max-w-5xl">
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="w-full max-w-5xl"
+          >
             <Suspense fallback={<div className="p-12 text-center text-white font-bold">Loading Video Walkthrough...</div>}>
               <MerchantVideoWalkthrough onClose={() => setShowMerchantVideo(false)} />
             </Suspense>
@@ -433,20 +571,46 @@ function App() {
 
   return (
     <div className="min-h-screen bg-[var(--color-bg)] text-theme selection:bg-emerald-500 selection:text-white font-sans overflow-x-hidden flex flex-col transition-colors duration-500">
+
       {/* Navigation */}
       <nav
         className="fixed w-full z-50 bg-[var(--color-bg)]/80 backdrop-blur-md border-b border-[var(--card-border)]"
-        style={{ WebkitTransform: 'translateZ(0)', transform: 'translateZ(0)', willChange: 'transform' }}
+        style={{
+          WebkitTransform: 'translateZ(0)',
+          transform: 'translateZ(0)',
+          willChange: 'transform',
+        }}
       >
         <div className="max-w-7xl mx-auto px-4 md:px-6 h-16 md:h-20 flex items-center justify-between">
           <Link to="/" onClick={() => { if (window.location.pathname === '/') window.scrollTo({ top: 0, behavior: 'smooth' }); }}>
             <Logo className="h-8 md:h-12 lg:h-14" textColor="text-theme" theme={theme} />
           </Link>
           <div className="hidden md:flex items-center gap-6 lg:gap-8 text-sm font-medium text-theme-muted shrink-0">
-            <a href="#features" className="hover:text-theme transition-colors">Features</a>
-            <a href="#roi-calculator" className="hover:text-theme transition-colors">ROI Calculator</a>
-            <a href="#pricing" className="hover:text-theme transition-colors">Pricing</a>
-            <Link to="/resources" className="hover:text-theme transition-colors">Guides & Docs</Link>
+            <a href="#brands" onClick={(e) => {
+              e.preventDefault();
+              if (window.location.pathname !== '/') {
+                window.location.href = '/#brands';
+              } else {
+                document.getElementById('brands').scrollIntoView({ behavior: 'smooth' });
+              }
+            }} className="hover:text-theme transition-colors">For Brands</a>
+            <a href="#merchants" onClick={(e) => {
+              e.preventDefault();
+              if (window.location.pathname !== '/') {
+                window.location.href = '/#merchants';
+              } else {
+                document.getElementById('merchants').scrollIntoView({ behavior: 'smooth' });
+              }
+            }} className="hover:text-theme transition-colors">For Merchants</a>
+            <a href="#partners" onClick={(e) => {
+              e.preventDefault();
+              if (window.location.pathname !== '/') {
+                window.location.href = '/#partners';
+              } else {
+                document.getElementById('partners').scrollIntoView({ behavior: 'smooth' });
+              }
+            }} className="hover:text-theme transition-colors">For Partners</a>
+            <Link to="/resources" className="hover:text-theme transition-colors">Resources</Link>
             <button
               type="button"
               onClick={() => {
@@ -472,40 +636,50 @@ function App() {
             <button
               onClick={() => setIsLoginOpen(!isLoginOpen)}
               onBlur={() => setTimeout(() => setIsLoginOpen(false), 200)}
-              className="px-4 md:px-6 py-2 md:py-2.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 rounded-full text-xs md:text-sm font-bold flex items-center gap-1 md:gap-2 transition-all shadow-sm cursor-pointer"
+              className="px-4 md:px-6 py-2 md:py-2.5 bg-[var(--card-bg)] hover:brightness-110 border border-[var(--card-border)] text-theme rounded-full text-xs md:text-sm font-semibold flex items-center gap-1 md:gap-2 transition-all shadow-sm"
             >
-              Portals
+              Log In
               <svg className={`w-3 h-3 md:w-4 md:h-4 transition-transform ${isLoginOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
               </svg>
             </button>
 
             {isLoginOpen && (
-              <div className="absolute right-0 mt-2 w-64 bg-[var(--card-bg)] border border-[var(--card-border)] rounded-2xl shadow-2xl py-2 z-50 animate-fade-in-up">
-                <div className="px-4 py-2 text-xs font-black text-theme-muted uppercase tracking-wider mb-2">
+              <div className="absolute right-0 mt-2 w-64 bg-[var(--card-bg)] border border-[var(--card-border)] rounded-2xl shadow-2xl py-2 z-50 animate-fade-in-up divide-none">
+                <div className="px-4 py-2 text-xs font-black text-theme-muted uppercase tracking-wider mb-2 border-none">
                   Choose Your Portal
                 </div>
                 <button
-                  onClick={() => openPortal('app')}
-                  className="w-full text-left px-4 py-3 hover:bg-white/5 text-sm font-bold transition-colors flex flex-col items-start"
+                  onClick={() => openPortal('brand')}
+                  className="w-full text-left px-4 py-3 hover:bg-[var(--color-text)] hover:bg-opacity-5 text-sm font-bold transition-colors flex flex-col items-start border-none"
                 >
-                  <span className="text-theme">Shopify Merchants</span>
-                  <span className="text-xs text-theme-muted font-medium mt-0.5">Revenue Shield & 301 Logs</span>
+                  <span className="text-theme">Brands</span>
+                  <span className="text-xs text-theme-muted font-medium mt-0.5">Manage your campaigns</span>
                 </button>
                 <button
-                  onClick={() => openPortal('brand')}
-                  className="w-full text-left px-4 py-3 hover:bg-white/5 text-sm font-bold transition-colors flex flex-col items-start"
+                  onClick={() => openPortal('app')}
+                  className="w-full text-left px-4 py-3 hover:bg-[var(--color-text)] hover:bg-opacity-5 text-sm font-bold transition-colors flex flex-col items-start border-none"
                 >
-                  <span className="text-theme">Brand Command Center</span>
-                  <span className="text-xs text-theme-muted font-medium mt-0.5">Campaigns & Cross-Store Drops</span>
+                  <span className="text-theme">Merchants</span>
+                  <span className="text-xs text-theme-muted font-medium mt-0.5">Access Shopify dashboard</span>
                 </button>
-                <div className="mx-4 my-1 border-t border-[var(--card-border)] opacity-30"></div>
+                <div className="mx-4 my-1 border-t border-[var(--card-border)] opacity-30 border-none"></div>
+                <button
+                  onClick={() => window.open('https://admin.shopify.com/store/mojiapp-demo-store/apps/mojipass-1/app', '_blank')}
+                  className="w-full text-left px-4 py-3 bg-[var(--color-brand)] bg-opacity-5 hover:bg-opacity-10 text-sm font-bold transition-colors flex flex-col items-start border-none group"
+                >
+                  <span className="text-[var(--color-brand)] flex items-center gap-2">
+                    🚀 Mojiapp Demo Store
+                  </span>
+                  <span className="text-[10px] text-[var(--color-brand)] opacity-70 font-black uppercase tracking-tighter mt-0.5">Developer Quick-Access</span>
+                </button>
+                <div className="mx-4 my-1 border-t border-[var(--card-border)] opacity-30 border-none"></div>
                 <button
                   onClick={() => openPortal('partner')}
-                  className="w-full text-left px-4 py-3 hover:bg-white/5 text-sm font-bold transition-colors flex flex-col items-start"
+                  className="w-full text-left px-4 py-3 hover:bg-[var(--color-text)] hover:bg-opacity-5 text-sm font-bold transition-colors flex flex-col items-start border-none"
                 >
-                  <span className="text-theme">Vetted Creators & Partners</span>
-                  <span className="text-xs text-theme-muted font-medium mt-0.5">Track Links & Commission Payouts</span>
+                  <span className="text-theme">Partners & Creators</span>
+                  <span className="text-xs text-theme-muted font-medium mt-0.5">Track your commissions</span>
                 </button>
               </div>
             )}
@@ -536,12 +710,11 @@ function App() {
             <Logo className="h-10" showText={false} theme={theme} />
           </Link>
         </div>
-        <p className="mb-4 text-theme-muted">© 2026 Mojipass® Ecosystem. Never Lose Another Sale to a Dead Link.</p>
+        <p className="mb-4 text-theme-muted">© 2026 Mojipass® Ecosystem. The Quad-Winner Marketplace.</p>
         <div className="flex justify-center gap-6">
           <Link to="/support" className="text-theme-muted hover:text-theme transition-colors font-bold">Support</Link>
           <Link to="/privacy" className="text-theme-muted hover:text-theme transition-colors">Privacy Policy</Link>
           <Link to="/terms" className="text-theme-muted hover:text-theme transition-colors">Terms of Service</Link>
-          <Link to="/resources" className="text-theme-muted hover:text-theme transition-colors">Downloadable Guides</Link>
         </div>
       </footer>
 
