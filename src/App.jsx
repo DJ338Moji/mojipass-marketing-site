@@ -79,9 +79,9 @@ function Home() {
 
           {/* Headline */}
           <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tighter leading-[1.05] drop-shadow-2xl">
-            <span className="block text-theme">STOP LOSING SALES TO</span>
+            <span className="block text-theme">STOP LOSING SALES & AD DOLLARS TO</span>
             <span className="block bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 via-cyan-400 to-blue-500 py-1">
-              DEAD LINKS & BURNED AD SPEND
+              DEAD 404 LINKS
             </span>
             <span className="block text-theme">ON SHOPIFY.</span>
           </h1>
